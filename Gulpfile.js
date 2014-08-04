@@ -7,14 +7,16 @@ var gulp = require('gulp'),
     prefix = require('gulp-autoprefixer'),
     jshint = require('gulp-jshint'),
     concat = require('gulp-concat'),
-    livereload = require('gulp-livereload'),
     handlebars = require('gulp-compile-handlebars'),
     markdown = require('gulp-markdown-to-json'),
+    browserSync = require('browser-sync'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
     fs = require('fs');
 
 gulp.task('less', function () {
+    console.log(global.isWatching);
+
     return gulp.src(LESS)
         .pipe(concat('style.less'))
         .pipe(less())
@@ -51,14 +53,14 @@ gulp.task('tpl', ['md'], function () {
 });
 
 gulp.task('watch', function () {
-    var server = livereload();
+    browserSync.init(['dist/**'], {
+		server: {
+			baseDir: 'dist'
+		}
+	});
 
     gulp.watch(LESS, ['less']);
     gulp.watch(JS, ['js']);
-
-    gulp.watch('dist/**').on('change', function (file) {
-        server.changed(file.path);
-    });
 });
 
 gulp.task('default', ['less', 'js']);
