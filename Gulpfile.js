@@ -12,10 +12,34 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
+    browserify = require('browserify'),
+    watchify = require('watchify'),
+    source = require('vinyl-source-stream'),
     fs = require('fs');
 
+gulp.task('browserify', function () {
+
+    var bundler = browserify('./src/app.js', watchify.args);
+
+    var bundle = function() {
+        return bundler
+            .bundle()
+            .on('error', function (err) {
+                gutil.log('Browserify Error', err);
+            })
+            .pipe(source('app.js'))
+            .pipe(gulp.dest('./dist'));
+    };
+
+    if (global.isWatching) {
+        bundler = watchify(bundler);
+        bundler.on('update', bundle);
+    }
+
+    return bundle();
+});
+
 gulp.task('less', function () {
-    console.log(global.isWatching);
 
     return gulp.src(LESS)
         .pipe(concat('style.less'))
@@ -28,12 +52,6 @@ gulp.task('jshint', function () {
     return gulp.src(JS)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'));
-});
-
-gulp.task('js', ['jshint'], function () {
-    return gulp.src(JS)
-        .pipe(concat('script.js'))
-        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('md', function () {
@@ -52,15 +70,20 @@ gulp.task('tpl', ['md'], function () {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('watch', function () {
+gulp.task('build', ['jshint', 'browserify', 'less', 'tpl']);
+
+gulp.task('watch', ['build'], function () {
     browserSync.init(['dist/**'], {
-		server: {
-			baseDir: 'dist'
-		}
-	});
+        server: {
+            baseDir: 'dist'
+        }
+    });
+
+    global.isWatching = true;
+
+    gulp.start('browserify');
 
     gulp.watch(LESS, ['less']);
-    gulp.watch(JS, ['js']);
+    gulp.watch(MD, ['tpl']);
+    gulp.watch(JS, ['jshint']);
 });
-
-gulp.task('default', ['less', 'js']);

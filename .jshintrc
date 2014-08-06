@@ -17,7 +17,7 @@
 	"maxcomplexity" : 20,
 	"maxlen": 120,
 	"browser": true,
-	"jquery": true,
+	"node": true,
     "devel": true,
 	"white": true,
 	"indent": 4,

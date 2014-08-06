@@ -1,1 +1,1 @@
-var app = 'hello';
+var $ = require('jquery');
