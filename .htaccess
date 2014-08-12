@@ -1,0 +1,29 @@
+AddType application/vnd.ms-fontobject .eot
+AddType font/ttf .ttf
+AddType font/otf .otf
+AddType application/font-woff .woff
+AddOutputFilterByType DEFLATE application/atom+xml \
+                              application/javascript \
+                              application/json \
+                              application/rss+xml \
+                              application/vnd.ms-fontobject \
+                              application/x-font-ttf \
+                              application/xhtml+xml \
+                              application/xml \
+				                      application/font-woff \
+                              font/opentype \
+                    				  font/ttf \
+                    				  font/oft \
+                              image/svg+xml \
+                              image/x-icon \
+                              text/css \
+                              text/html \
+                              text/plain \
+                              text/x-component \
+                              text/xml \
+				                      text/javascript
+
+# NEVER CACHE
+<FilesMatch "\.(html|css)$">
+Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
+</FilesMatch>

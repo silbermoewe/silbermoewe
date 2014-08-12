@@ -20,9 +20,5 @@
 	"node": true,
     "devel": true,
 	"white": true,
-	"indent": 4,
-	"predef": [
-        "Modernizr",
-        "_"
-	]
+	"indent": 4
 }

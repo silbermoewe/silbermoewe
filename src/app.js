@@ -1,1 +1,3 @@
-var $ = require('jquery');
+require('./fixed')();
+require('./images')();
+require('./map')();
