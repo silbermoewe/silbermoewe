@@ -61,6 +61,8 @@ module.exports = function () {
 			offset = _.find(fixedEls, {id: id}).offset,
 			time = Math.abs(offset - window.pageYOffset) / 2;
 
+		window.history.pushState(null, '', '#' + id);
+
 		$('html,body').stop().animate({
           scrollTop: offset
         }, time);
