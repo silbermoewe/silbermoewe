@@ -95,7 +95,10 @@ gulp.task('tpl', ['md'], function () {
         post.body_de = languages[0];
         post.body_en = languages[1];
         post.folder = name;
-        post.preview = $('<div>' + post.body_en + '</div>').find('p:first').text();
+        post.htmlId = post.title.replace(new RegExp(' ', 'g'), '_');
+
+        var previewContainer = $('<div>' + post.body_en + '</div>').find('p');
+        post.preview = previewContainer.eq(0).text() + previewContainer.eq(1).text();
     });
 
     posts = _.sortBy(posts, 'date').reverse();

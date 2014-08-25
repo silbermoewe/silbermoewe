@@ -25,7 +25,7 @@
 </head>
 <body>
     {{#each this}}
-    <article data-time="{{date}}" id="{{title}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
+    <article data-time="{{date}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
 
 		<nav>
 			<h1>
@@ -37,7 +37,7 @@
 
 			<ul>
                 {{#each ../this}}
-				<li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{title}}">{{title}}</a></li>
+				<li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
                 {{/each}}
 			</ul>
 
@@ -64,7 +64,7 @@
 				{{km}}
 			</div>
 			{{#each ../this}}
-				<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{title}}" href="#{{title}}"></a>
+				<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
             {{/each}}
 			<svg><use xlink:href="#map"></use></svg>
 		</div>

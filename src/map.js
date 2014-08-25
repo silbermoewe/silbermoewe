@@ -61,7 +61,7 @@ module.exports = function () {
 
 			map.stops[id] = location;
 
-			$('[data-for=' + id + ']').each(setStop);
+			$('[data-for="' + id + '"]').each(setStop);
 		});
 	});
 

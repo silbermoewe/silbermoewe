@@ -13,18 +13,35 @@ module.exports = function () {
 		return $(img).data('src') + '-' + width + '.jpg';
 	}
 
-	var $pictures = $('article img'),
-		$article = $('article h2').eq(0);
+	var $heading = $('article h2').eq(0),
+		$articles = $('article'),
+		articles = _.map($articles, function (val) { return val; }).reverse();
 
 	function setPictSrc () {
-		var width = $article.innerWidth();
+		var width = $heading.innerWidth(),
+			scrollPosition = $(window).scrollTop();
 
-		$pictures.each(function () {
+		var currentArticleIndex = _.findIndex(articles, function (val) {
+			return $(val).offset().top <= scrollPosition;
+		});
+
+		var articlesToLoad = [articles[currentArticleIndex]];
+
+		if (articles[currentArticleIndex - 1] !== undefined) {
+			articlesToLoad.push(articles[currentArticleIndex - 1]);
+		} 
+
+		if (articles[currentArticleIndex + 1] !== undefined) {
+			articlesToLoad.push(articles[currentArticleIndex + 1]);
+		} 
+
+		$(articlesToLoad).find('img').each(function () {
 			$(this).attr('src', getPictSource(width, this));
 		});
 	}
 
 	$(window).on('resize', _.debounce(setPictSrc, 500));
+	$(window).on('scroll', _.debounce(setPictSrc, 500));
 	setPictSrc();
 
 	$('img').on('click', function () {
@@ -73,7 +90,6 @@ module.exports = function () {
 		});
 
 		$imagePreloader.load(function () {
-			console.log('loaded');
 			$container.css('background-image', 'url(' + getPictSource(width, $image) + ')');
 		});
 	});

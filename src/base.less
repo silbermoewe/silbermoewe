@@ -25,6 +25,12 @@ nav, h2 {
 	font-family: Jubilat;
 }
 
+a {
+	color: inherit;
+	text-decoration: none;
+	border-color: currentColor;
+}
+
 h1, h2 {
 	font-weight: 200;
 	font-size: 24px;
@@ -61,15 +67,32 @@ article {
 	padding: 60px @mapWidth 60px @navWidth;
 	overflow: hidden;
 	position: relative;
+	background-attachment: fixed;
 
 	> div {
 		transform: translateZ(0);
 		padding-right: 40px;
+
+		a {
+			border-width: 0 0 2px;
+			border-style: solid;
+			opacity: .7;
+			font-style: italic;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 
 	img {
 		width: 100%;
 		cursor: pointer;
+		display: block;
+
+		+ img {
+			margin-top: 1.5em;
+		}
 	}
 
 	&:nth-child(even) {
@@ -87,9 +110,6 @@ nav {
 	padding-top: 120px;
 
 	a {
-		color: inherit;
-		text-decoration: none;
-		border-color: currentColor;
 		opacity: .6;
 
 		&:hover {
