@@ -48,9 +48,19 @@
         <div>
 	        <h2>{{title}}</h2>
 	        <span lang="en">
+	        	{{#if author}}
+	        		<p class="intro">
+	        			A guest article by {{author}}
+	        		</p>
+	        	{{/if}}
 	        	{{{body_en}}}
 	        </span>
 	        <span lang="de">
+	        	{{#if author}}
+	        		<p class="intro">
+	        			Ein Gastbeitrag von {{author}}
+	        		</p>
+	        	{{/if}}
 	        	{{{body_de}}}
 	        </span>
         </div>
@@ -62,6 +72,21 @@
 				<label lang="en">Kilometre</label>
 				<label lang="de">Kilometer</label>
 				{{km}}
+				{{#if guests}}
+					|
+					{{#each guests}}
+						{{#if @first}}
+							{{#if @last}}
+								<label lang="en">Guest</label>
+								<label lang="de">Gast</label>
+							{{else}}
+								<label lang="en">Guests</label>
+								<label lang="de">Gäste</label>
+							{{/if}}
+						{{/if}}
+						{{this}}{{#unless @last}}, {{/unless}}
+					{{/each}}
+				{{/if}}
 			</div>
 			{{#each ../this}}
 				<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
