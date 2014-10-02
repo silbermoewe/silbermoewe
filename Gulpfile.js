@@ -21,12 +21,17 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     imageResize = require('gulp-image-resize'),
     changed = require('gulp-changed'),
+    cache = require('gulp-cache'),
     rsync = require('rsyncwrapper').rsync,
     merge = require('merge-stream'),
     _ = require('lodash'),
     jsdom = require("jsdom"), 
     $ = require("jquery")(jsdom.jsdom().createWindow()),
     fs = require('fs');
+
+var Hypher = require('hypher'),
+    hypherEn = new Hypher(require('hyphenation.en-us')),
+    hypherDe = new Hypher(require('hyphenation.de'));
 
 gulp.task('browserify', function () {
 
@@ -75,6 +80,18 @@ gulp.task('md', function () {
         .pipe(gulp.dest('tmp'));
 });
 
+var hyphenate = function (string, hyphenator) {
+    var $body = $('<span>' + string + '</span>');
+    $body.find('p').each(function () {
+        _.each(this.childNodes, function (node) {
+            if (node.nodeType === 3) {
+                node.nodeValue = hyphenator.hyphenateText(node.nodeValue);
+            }
+        });
+    });
+    return $body.html();
+};
+
 gulp.task('tpl', ['md'], function () {
     var posts = JSON.parse(fs.readFileSync('./tmp/blog.json')),
         options = {
@@ -92,8 +109,8 @@ gulp.task('tpl', ['md'], function () {
     _.each(posts, function (post, name) {
         post.body = post.body.replace(new RegExp('img src="', 'g'), 'img src="img/loading.gif" data-src="pictures/' + name + '/');
         var languages = post.body.split('<p>---en---</p>\n');
-        post.body_de = languages[0];
-        post.body_en = languages[1];
+        post.body_de = hyphenate(languages[0], hypherDe);
+        post.body_en = hyphenate(languages[1], hypherEn);
         post.folder = name;
         post.htmlId = post.title.replace(new RegExp(' ', 'g'), '_');
 
@@ -125,12 +142,11 @@ gulp.task('htaccess', function() {
 
 var resizePictures = function (width) {
     return gulp.src(PICT)
-        .pipe(changed('dist/pictures/'))
-        .pipe(imageResize({
+        .pipe(cache(imageResize({
             width: width,
             quality: 0.6,
             imageMagick: true
-        }))
+        })))
         .pipe(rename(function (path) {
             path.basename += '-' + width;
         }))
