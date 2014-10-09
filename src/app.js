@@ -1,3 +1,5 @@
-require('./fixed')();
-require('./images')();
+require('./fixed');
+require('./language');
+require('./images');
+
 require('./map')();
