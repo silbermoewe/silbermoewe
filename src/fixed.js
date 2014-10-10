@@ -3,12 +3,15 @@ var $ = require('jquery'),
 
 var $articles = $('article'),
 	fixedEls = [],
-	lastScrollTop = 0;
+	lastScrollTop = 0,
+	windowHeight;
 
 function cacheOffsets() {
 	$articles.each(function (index) {
 		fixedEls[index].offset = $(this).offset().top;
 	});
+
+	windowHeight = $(window).height();
 
 	moveNav();
 }
@@ -30,8 +33,21 @@ function onScroll() {
 }
 
 function moveNav() {
-	fixedEls.forEach(function (els) {
-		$([els.nav[0], els.map[0]]).css('transform', 'translate3d(0,' + (lastScrollTop - els.offset) + 'px,0)');
+	var inViewport = [];
+
+	for (var i = fixedEls.length - 1; i >= 0; i--) {
+		if (fixedEls[i].offset < lastScrollTop) {
+			inViewport.push(fixedEls[i]);
+			break;
+		}
+		
+		if (fixedEls[i].offset < lastScrollTop + windowHeight) {
+			inViewport.push(fixedEls[i]);
+		}
+	}
+
+	inViewport.forEach(function (el) {
+		el.fixed.css('transform', 'translate3d(0,' + (lastScrollTop - el.offset) + 'px,0)');
 	});
 }
 
@@ -54,8 +70,7 @@ function navigate(event) {
 $articles.each(function (index) {
 	fixedEls[index] = {
 		article: $(this),
-		nav: $(this).find('nav'),
-		map: $(this).find('.map'),
+		fixed: $(this).find('.fixed'),
 		id: $(this).attr('id')
 	};
 });

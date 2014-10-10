@@ -74,23 +74,6 @@ article {
 	padding: 60px @mapWidth 60px @navWidth;
 	overflow: hidden;
 	position: relative;
-	background-attachment: fixed;
-
-	> div {
-		transform: translateZ(0);
-		padding-right: 40px;
-
-		a {
-			border-width: 0 0 2px;
-			border-style: solid;
-			opacity: .7;
-			font-style: italic;
-
-			&:hover {
-				opacity: 1;
-			}
-		}
-	}
 
 	img {
 		width: 100%;
@@ -107,13 +90,43 @@ article {
 	}
 }
 
+nav, .map, .content {
+	padding-right: 40px;
+	
+}
+
+.content {
+	transform: translateZ(0);
+
+	a {
+		border-width: 0 0 2px;
+		border-style: solid;
+		opacity: .7;
+		font-style: italic;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.fixed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+	background-color: inherit;
+}
+
 nav {
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: @navWidth;
 	text-align: right;
-	padding-right: 40px;
 	padding-top: 120px;
 
 	a {

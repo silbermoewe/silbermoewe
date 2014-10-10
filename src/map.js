@@ -1,6 +1,7 @@
 var d3 = require('d3'),
 	$ = require('jquery'),
-	topojson = require('topojson');
+	topojson = require('topojson'),
+	_ = require('lodash');
 
 module.exports = function () {
 	var subMap = $('.map:first').find('svg');
@@ -80,14 +81,5 @@ module.exports = function () {
 		map.$stops.each(setStop);
 	}
 
-	function mobileResize() {
-		$('.map').css('height', $(window).height());
-		resize();
-	}
-
-	var isMobile = window.navigator.userAgent.toLowerCase().indexOf('mobile') !== -1;
-
-	$(window).on('resize', (isMobile) ? mobileResize : resize);
-
-	if (isMobile) { mobileResize(); }
+	$(window).on('resize', _.debounce(resize, 500));
 };
