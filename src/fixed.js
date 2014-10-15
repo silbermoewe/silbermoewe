@@ -4,6 +4,7 @@ var $ = require('jquery'),
 var $articles = $('article'),
 	fixedEls = [],
 	lastScrollTop = 0,
+	ticking = false,
 	windowHeight;
 
 function cacheOffsets() {
@@ -21,18 +22,20 @@ function onScroll() {
 	scrollTop = (scrollTop < 0) ? 0 : scrollTop;
 
 	if (scrollTop === lastScrollTop) {
-		window.requestAnimationFrame(onScroll);
 		return false;
 	}
 
 	lastScrollTop = scrollTop;
 
-	moveNav();
-
-	window.requestAnimationFrame(onScroll);		
+	if (!ticking) {
+		ticking = true;
+		moveNav();
+	}
 }
 
 function moveNav() {
+	ticking = false;
+
 	var inViewport = [];
 
 	for (var i = fixedEls.length - 1; i >= 0; i--) {
@@ -78,7 +81,7 @@ $articles.each(function (index) {
 $(window).on('resize', cacheOffsets);
 cacheOffsets();
 
-window.requestAnimationFrame(onScroll);
+$(window).on('scroll', onScroll);
 
 document.addEventListener('typekitLoaded', cacheOffsets);
 
