@@ -2,7 +2,7 @@ var LESS = 'src/**/*.less',
     JS = 'src/**/*.js',
     MD = 'posts/**/*.md',
     PICT = 'posts/**/*.jpg',
-    IMG = 'img/**/*.*'
+    IMG = 'img/**/*.*';
 
 var gulp = require('gulp'),
     less = require('gulp-less'),
@@ -189,7 +189,8 @@ gulp.task('watch', ['build'], function () {
     browserSync.init(['dist/**'], {
         server: {
             baseDir: 'dist'
-        }
+        },
+        ghostMode: false
     });
 
     global.isWatching = true;
