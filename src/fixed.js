@@ -43,7 +43,7 @@ function moveNav() {
 			inViewport.push(fixedEls[i]);
 			break;
 		}
-		
+
 		if (fixedEls[i].offset < lastScrollTop + windowHeight) {
 			inViewport.push(fixedEls[i]);
 		}
@@ -54,21 +54,7 @@ function moveNav() {
 	});
 }
 
-function navigate(event) {
-	event.preventDefault();
-
-	var id = $(this).attr('href').replace('#', ''),
-		offset = _.find(fixedEls, {id: id}).offset,
-		time = Math.abs(offset - window.pageYOffset) / 2;
-
-	window.history.pushState(null, '', '#' + id);
-
-	$('html,body').stop().animate({
-      scrollTop: offset
-    }, time);
-}
-
-//init
+// init
 
 $articles.each(function (index) {
 	fixedEls[index] = {
@@ -84,9 +70,6 @@ cacheOffsets();
 $(window).on('scroll', onScroll);
 
 document.addEventListener('typekitLoaded', cacheOffsets);
-
-$('nav').on('click', 'a', navigate);
-$('.map').on('click', 'a', navigate);
 
 module.exports = {
 	elements: fixedEls,
