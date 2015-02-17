@@ -22,7 +22,7 @@ var gulp = require('gulp'),
     imageResize = require('gulp-image-resize'),
     gm = require('gulp-gm'),
     imageSize = require('image-size-stream'),
-    cache = require('gulp-cache'),
+    newer = require('gulp-newer'),
     rsync = require('rsyncwrapper').rsync,
     merge = require('merge-stream'),
     _ = require('lodash'),
@@ -143,13 +143,14 @@ gulp.task('htaccess', function() {
 
 var resizePictures = function (width) {
     return gulp.src(PICT)
-        .pipe(cache(imageResize({
+        .pipe(rename(function (path) {
+            path.basename += '-' + width;
+        }))
+        .pipe(newer('dist/pictures/'))
+        .pipe(imageResize({
             width: width,
             quality: 0.6,
             imageMagick: true
-        })))
-        .pipe(rename(function (path) {
-            path.basename += '-' + width;
         }))
         .pipe(gulp.dest('dist/pictures/'));
 };
