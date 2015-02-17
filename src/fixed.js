@@ -6,7 +6,7 @@ var $articles = $('article'),
 	lastScrollTop = 0,
 	scrolling,
 	debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500),
-	transform = document.body.style.transform ? 'transform' : 'webkitTransform',
+	transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform' : 'transform',
 	windowHeight;
 
 function cacheOffsets() {
