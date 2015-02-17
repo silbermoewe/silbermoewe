@@ -26,13 +26,9 @@ var gulp = require('gulp'),
     rsync = require('rsyncwrapper').rsync,
     merge = require('merge-stream'),
     _ = require('lodash'),
-    jsdom = require("jsdom"),
-    $ = require("jquery")(jsdom.jsdom().parentWindow),
     fs = require('fs');
 
-var Hypher = require('hypher'),
-    hypherEn = new Hypher(require('hyphenation.en-us')),
-    hypherDe = new Hypher(require('hyphenation.de'));
+var mdReplace = require('./gulp-modules/md-replace');
 
 gulp.task('browserify', function () {
 
@@ -78,20 +74,9 @@ gulp.task('md', function () {
     return gulp.src(MD)
         .pipe(gutil.buffer())
         .pipe(markdown('blog.json'))
+        .pipe(mdReplace())
         .pipe(gulp.dest('tmp'));
 });
-
-var hyphenate = function (string, hyphenator) {
-    var $body = $('<span>' + string + '</span>');
-    $body.find('p').each(function () {
-        _.each(this.childNodes, function (node) {
-            if (node.nodeType === 3) {
-                node.nodeValue = hyphenator.hyphenateText(node.nodeValue);
-            }
-        });
-    });
-    return $body.html();
-};
 
 gulp.task('tpl', ['md'], function () {
     var posts = JSON.parse(fs.readFileSync('./tmp/blog.json')),
@@ -106,24 +91,6 @@ gulp.task('tpl', ['md'], function () {
                 }
             }
         };
-
-    _.each(posts, function (post, name) {
-        post.body = post.body.replace(new RegExp('img src="', 'g'), 'img src="img/loading.gif" data-src="pictures/' + name + '/');
-        var languages = post.body.split('<p>---en---</p>\n');
-        post.body_de = hyphenate(languages[0], hypherDe);
-        post.body_en = hyphenate(languages[1], hypherEn);
-        post.folder = name;
-        post.htmlId = post.title.replace(new RegExp(' ', 'g'), '_');
-
-        var previewContainer = $('<div>' + post.body_en + '</div>').find('p');
-        post.preview = previewContainer.eq(0).text() + previewContainer.eq(1).text();
-    });
-
-    posts = _.sortBy(posts, 'date').reverse();
-
-    posts.forEach(function (post) {
-        post.days = Math.round((post.date - _.last(posts).date) / (1000 * 60 * 60 * 24));
-    });
 
     return gulp.src('src/**/*.handlebars')
         .pipe(handlebars(posts, options))
