@@ -29,9 +29,19 @@ function replaceImages(post, name) {
     var $body = $('<span>' + post.body + '</span>');
 
     $body.find('img').each(function () {
-        $(this)
-            .attr('data-src', 'pictures/' + name + '/' + $(this).attr('src'))
-            .attr('src', 'img/loading.gif')
+        var $image = $('<div/>')
+            .addClass('image')
+            .attr('data-src', 'pictures/' + name + '/' + $(this).attr('src'));
+
+        $(this).parent().before($image);
+        $(this).remove();
+    });
+
+    $body.find('p').each(function () {
+        if ($(this).text().trim().length) {
+            return;
+        }
+        $(this).remove();
     });
 
     post.body = $body.html();

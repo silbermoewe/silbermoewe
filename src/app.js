@@ -1,5 +1,5 @@
 require('./fixed');
 require('./language');
 require('./images');
-
-require('./map')();
+require('./image-viewer');
+require('./map');
