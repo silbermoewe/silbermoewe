@@ -155,7 +155,7 @@ gulp.task('dist', function () {
 });
 
 gulp.task('watch', ['build'], function () {
-    browserSync.init(['dist/**'], {
+    browserSync.init(['dist/**/*.{js,css}'], {
         server: {
             baseDir: 'dist'
         },
