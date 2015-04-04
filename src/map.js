@@ -15,6 +15,8 @@ var map = {
 	factor: 2.8
 };
 
+_.assign(map, getSize());
+
 map.projection = d3.geo.mercator()
 					.center([19.54, 45.25]) // I used coordinates 9.21 23.64 29.87 64.36 for the bounding box
 					.translate([map.width / 2, map.height / 2])
@@ -43,10 +45,6 @@ d3.json('https://diesilbermoewe.de:61435/route', function (error, path) {
 
 window.addEventListener('resize', _.debounce(resize, 500));
 
-// function addStop() {
-
-// }
-
 function setStop(el) {
 	var id = el.getAttribute('data-for');
 	if (map.stops[id]) {
@@ -57,8 +55,7 @@ function setStop(el) {
 }
 
 function resize() {
-	map.width = subMap.offsetWidth;
-	map.height = subMap.offsetHeight;
+	_.assign(map, getSize());
 
 	map.projection
 		.translate([map.width / 2, map.height / 2])
@@ -69,6 +66,15 @@ function resize() {
 	map.svg.select('.route').attr('d', map.path);
 
 	_.each(map.$stops, setStop);
+}
+
+function getSize() {
+	var rect = subMap.getBoundingClientRect();
+
+	return {
+		width: rect.width,
+		height: rect.height
+	};
 }
 
 _.each(articles, function (article) {
