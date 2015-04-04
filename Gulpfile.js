@@ -24,7 +24,8 @@ var gulp = require('gulp'),
     rsync = require('rsyncwrapper').rsync,
     merge = require('merge-stream'),
     _ = require('lodash'),
-    fs = require('fs');
+    fs = require('fs'),
+    argv = require('yargs').argv;
 
 var mdReplace = require('./gulp-modules/md-replace');
 
@@ -134,7 +135,7 @@ gulp.task('deploy', function (callback) {
     rsync({
         ssh: true,
         src: './dist/',
-        dest: 'moewe@indus.uberspace.de:/home/moewe/html/',
+        dest: 'moewe@indus.uberspace.de:/var/www/virtual/moewe/' + (argv.subdomain || '2014') + '.diesilbermoewe.de',
         recursive: true,
         syncDest: true,
         args: ['--verbose']
