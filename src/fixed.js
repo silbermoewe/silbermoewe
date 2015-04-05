@@ -6,8 +6,7 @@ var win = require('./window-dimensions');
 
 var lastScrollTop = 0,
 	scrolling,
-	debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500),
-	transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform' : 'transform';
+	debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
 
 win.onResize(moveNav);
 
@@ -37,8 +36,22 @@ function onTick() {
 }
 
 function moveNav() {
-	_.each(inViewport(articles, lastScrollTop, win.height), function (article) {
-		article.fixed.style[transform] = 'translate3d(0,' + (lastScrollTop - article.offset) + 'px,0)';
+
+	var visible = inViewport(articles, lastScrollTop, win.height);
+
+	_.each(articles, function (article) {
+		var isVisible = visible.indexOf(article) !== -1,
+			offset = article.offset - lastScrollTop,
+			height = win.height - offset,
+			clipped = offset > 0;
+
+		var css = {
+			visibility: isVisible ? 'visible' : 'hidden',
+			height: clipped ? height + 'px' : '',
+			top: clipped ? 'auto' : ''
+		};
+
+		applyCss(article, css);
 	});
 }
 
@@ -46,8 +59,14 @@ function cancelMoveNav() {
 	scrolling = false;
 }
 
-window.addEventListener('scroll', onScroll);
+function applyCss(article, css) {
+	if (_.isEqual(article.css, css)) { return; }
 
-module.exports = {
-	reflow: _.noop
-};
+	article.css = css;
+
+	_.each(css, function (value, property) {
+		article.fixed.style[property] = value;
+	});
+}
+
+window.addEventListener('scroll', onScroll);

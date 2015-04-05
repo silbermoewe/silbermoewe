@@ -73,11 +73,6 @@ p {
 article {
 	padding: 60px @mapWidth 60px @navWidth;
 	overflow: hidden;
-	position: relative;
-
-	&:nth-child(even) {
-		box-shadow: inset 0 0 30px rgba(0,0,0,.5);
-	}
 }
 
 .image {
@@ -142,20 +137,31 @@ nav, .map, .content {
 }
 
 .fixed {
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
 	top: 0;
 	left: 0;
 	right: 0;
+	bottom: 0;
+	transform: translateZ(0);
+}
+
+nav, .map, .fixed-inner {
+	position: absolute;
 	height: 100vh;
+	bottom: 0;
+}
+
+.fixed-inner {
+	left: 0;
+	right: 0;
 	background-size: cover;
 	background-position: center;
 	background-color: inherit;
 }
 
 nav {
-	position: absolute;
 	left: 0;
-	top: 0;
 	width: @navWidth;
 	text-align: right;
 	padding-top: 120px;
@@ -193,14 +199,10 @@ nav {
 }
 
 .map {
-	position: absolute;
 	padding-top: 120px;
 	padding-bottom: 40px;
-	top: 0;
 	right: 0;
-	height: 100vh;
 	width: @mapWidth;
-	transform: translateZ(0);
 
 	svg {
 		width: 100%;

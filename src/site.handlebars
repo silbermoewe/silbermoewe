@@ -26,55 +26,57 @@
 <body>
     {{#each this}}
     <article data-time="{{date}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
-    	<div class="fixed"
+    	<div class="fixed">
+    		<div class="fixed-inner"
     		style="background-image: url(/img/{{backgroundImage}});
     		{{#each backgroundCss}}{{@key}}: {{this}};{{/each}}">
-			<nav>
-				<h1>
-					<svg width="60px" height="40px" viewBox="0 0 48.55 40">
-						<use xlink:href="#logo"></use>
-					</svg>
-					die silbermöwe
-				</h1>
+    			<nav>
+					<h1>
+						<svg width="60px" height="40px" viewBox="0 0 48.55 40">
+							<use xlink:href="#logo"></use>
+						</svg>
+						die silbermöwe
+					</h1>
 
-				<ul>
-	                {{#each ../this}}
-					<li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
-	                {{/each}}
-				</ul>
+					<ul>
+		                {{#each ../this}}
+						<li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
+		                {{/each}}
+					</ul>
 
-				<div class="language-switch">
-					[<span data-lang="de" lang="en">DE</span><span data-lang="en" lang="de">EN</span>]
-				</div>
-			</nav>
-			<div class="map">
-				<div class="meta">
-					<label lang="en">Day</label>
-					<label lang="de">Tag</label>
-					{{days}} |
-					<label lang="en">Kilometre</label>
-					<label lang="de">Kilometer</label>
-					{{km}}
-					{{#if guests}}
-						|
-						{{#each guests}}
-							{{#if @first}}
-								{{#if @last}}
-									<label lang="en">Guest</label>
-									<label lang="de">Gast</label>
-								{{else}}
-									<label lang="en">Guests</label>
-									<label lang="de">Gäste</label>
+					<div class="language-switch">
+						[<span data-lang="de" lang="en">DE</span><span data-lang="en" lang="de">EN</span>]
+					</div>
+				</nav>
+				<div class="map">
+					<div class="meta">
+						<label lang="en">Day</label>
+						<label lang="de">Tag</label>
+						{{days}} |
+						<label lang="en">Kilometre</label>
+						<label lang="de">Kilometer</label>
+						{{km}}
+						{{#if guests}}
+							|
+							{{#each guests}}
+								{{#if @first}}
+									{{#if @last}}
+										<label lang="en">Guest</label>
+										<label lang="de">Gast</label>
+									{{else}}
+										<label lang="en">Guests</label>
+										<label lang="de">Gäste</label>
+									{{/if}}
 								{{/if}}
-							{{/if}}
-							{{this}}{{#unless @last}}, {{/unless}}
-						{{/each}}
-					{{/if}}
-				</div>
-				{{#each ../this}}
-					<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
-	            {{/each}}
-				<svg><use xlink:href="#map"></use></svg>
+								{{this}}{{#unless @last}}, {{/unless}}
+							{{/each}}
+						{{/if}}
+					</div>
+					{{#each ../this}}
+						<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
+		            {{/each}}
+					<svg><use xlink:href="#map"></use></svg>
+    		</div>
 			</div>
     	</div>
         <div class="content">
