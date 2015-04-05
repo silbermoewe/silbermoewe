@@ -40,7 +40,8 @@
     "merge-stream": "^0.1.5",
     "rsyncwrapper": "^0.4.1",
     "vinyl-source-stream": "1.x",
-    "watchify": "2.x"
+    "watchify": "2.x",
+    "yargs": "^3.7.0"
   },
   "dependencies": {
     "d3": "^3.4.11",
