@@ -7,12 +7,17 @@ var transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform'
 var current;
 var gallery;
 var $viewer = document.createElement('div');
+var touch = require('./touch')($viewer);
+
 $viewer.classList.add('image-view');
 $viewer.addEventListener('click', hideImageViewer);
 document.body.appendChild($viewer);
 
 win.onResize(initImageViewer);
 initImageViewer();
+
+touch.on('move', touchMoveHandler);
+touch.on('end', touchEndHandler);
 
 document.addEventListener('keydown', function (event) {
     switch (event.keyCode) {
@@ -37,6 +42,38 @@ function addListener(image) {
     });
 }
 
+function touchMoveHandler(distance) {
+    $viewer.classList.remove('is-animating');
+
+    setViewerCss(convertToVw(distance));
+}
+
+function touchEndHandler(distance) {
+    $viewer.classList.add('is-animating');
+
+    var vw = convertToVw(distance);
+
+    if (vw > 20) {
+        goToImage(1);
+    } else if (vw < -20) {
+        goToImage(-1);
+    } else {
+        goToImage(0);
+    }
+}
+
+function convertToVw(distance) {
+    return distance / win.width * 100;
+}
+
+function setViewerCss(offset) {
+    var vw = _.findIndex(gallery, current) * -100 - (offset ? offset : 0);
+
+    if (vw > 0 || vw < ((gallery.length - 1) * -100)) { return; }
+
+    $viewer.style[transform] = 'translateX(' + vw + 'vw)';
+}
+
 function goToImage(offset) {
     if (!current) { return; }
 
@@ -57,8 +94,7 @@ function showImage(image, oldUrl) {
     loadImage(image);
     loadAround(image);
 
-    var index = _.findIndex(gallery, image);
-    $viewer.style[transform] = 'translateX(-' + index + '00vw)';
+    setViewerCss();
 }
 
 function initImageViewer(event) {
@@ -88,7 +124,7 @@ function showImageViewer() {
 
 function hideImageViewer() {
     current = null;
-    $viewer.classList.remove('is-active');
+    $viewer.classList.remove('is-active', 'is-animating');
     document.body.classList.remove('no-scroll');
 }
 
