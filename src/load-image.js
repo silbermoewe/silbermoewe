@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 var getImageUrl = require('./get-image-url');
 
 module.exports = function (image) {
@@ -12,10 +10,11 @@ module.exports = function (image) {
     var loadIndicator = document.createElement('img');
     loadIndicator.addEventListener('load', setSrc);
     loadIndicator.src = url;
+    image.el.classList.add('is-loading');
 
     function setSrc() {
         image.el.style.backgroundImage = 'url(' + url + ')';
-        image.el.classList.add('is-loaded');
+        image.el.classList.remove('is-loading');
         loadIndicator.removeEventListener('load', setSrc);
     }
 };

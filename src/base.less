@@ -79,6 +79,7 @@ article {
 	position: relative;
 	padding-bottom: 66.6667%;
 	background-position: center;
+	background-size: cover;
 	cursor: pointer;
 	.white-background();
 
@@ -86,19 +87,15 @@ article {
 		transition: all .5s;
 	}
 
-	&.is-loaded {
-		opacity: 1;
-		background-size: cover;
-		background-image: none;
-
+	&.is-loading {
 		&:before {
-			visibility: hidden;
-			background-image: none;
+			visibility: visible;
+			background-image: url("/img/loading.gif");
 		}
 	}
 
 	&:before {
-		background-image: url("/img/loading.gif");
+		visibility: hidden;
 		position: absolute;
 		background-repeat: no-repeat;
 		background-size: 70% 70%;
