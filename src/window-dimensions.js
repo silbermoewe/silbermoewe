@@ -13,11 +13,11 @@ module.exports = {
 
 window.addEventListener('resize', resizeHandler);
 
-function resizeHandler () {
+function resizeHandler (event) {
     module.exports.width = window.innerWidth;
     module.exports.height = window.innerHeight;
     elements.reCalc();
     _.each(callbacks, function (callback) {
-        callback();
+        callback(event);
     });
 }
