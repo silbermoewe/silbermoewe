@@ -108,6 +108,7 @@ function initImageViewer(event) {
         var newImage = _.clone(image);
         newImage.trigger = image.el;
         newImage.el = document.createElement('div');
+        newImage.el.classList.add('image');
         newImage.full = true;
         delete newImage.url;
 
