@@ -5,6 +5,7 @@ var LESS = 'src/**/*.less',
     IMG = 'img/**/*.*';
 
 var gulp = require('gulp'),
+    webpack = require('gulp-webpack'),
     less = require('gulp-less'),
     prefix = require('gulp-autoprefixer'),
     jshint = require('gulp-jshint'),
@@ -14,10 +15,6 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
-    source = require('vinyl-source-stream'),
-    streamify = require('gulp-streamify'),
     uglify = require('gulp-uglify'),
     imageResize = require('gulp-image-resize'),
     newer = require('gulp-newer'),
@@ -29,29 +26,15 @@ var gulp = require('gulp'),
 
 var mdReplace = require('./gulp-modules/md-replace');
 
-gulp.task('browserify', function () {
+var webpackConfig = require('./webpack.config.js'),
+    webpackDistConfig = require('./webpack.dist.config.js');
 
-    var bundler = browserify('./src/app.js', watchify.args);
+gulp.task('js', function () {
+    var config = global.isDist ? webpackDistConfig : webpackConfig;
+    config.watch = global.isWatching;
 
-    var bundle = function() {
-        return bundler
-            .bundle()
-            .on('error', function (err) {
-                gutil.log('Browserify Error', err);
-            })
-            .pipe(source('app.js'))
-            .pipe(global.isDist ? streamify(uglify()) : gutil.noop())
-            .pipe(gulp.dest('./dist'));
-    };
-
-    if (global.isWatching) {
-        bundler = watchify(bundler);
-        bundler.on('update', bundle);
-    }
-
-    bundler.transform('brfs');
-
-    return bundle();
+    return webpack(config)
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('less', function () {
@@ -145,7 +128,7 @@ gulp.task('deploy', function (callback) {
     });
 });
 
-gulp.task('build', ['jshint', 'browserify', 'less', 'tpl', 'pict', 'img', 'htaccess']);
+gulp.task('build', ['jshint', 'js', 'less', 'tpl', 'pict', 'img', 'htaccess']);
 
 gulp.task('dist', function () {
     global.isDist = true;
@@ -163,7 +146,7 @@ gulp.task('watch', ['build'], function () {
 
     global.isWatching = true;
 
-    gulp.start('browserify');
+    gulp.start('js');
 
     gulp.watch(LESS, ['less']);
     gulp.watch(MD, ['tpl']);
