@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server dist -p 3000 -s & gulp watch"
+    "start": "npm run serve & gulp watch",
+    "serve": "http-server dist -p 3000 -s",
+    "build": "gulp build",
+    "dist": "gulp dist",
+    "deploy": "gulp dist && gulp deploy"
   },
   "repository": {
     "type": "git",
