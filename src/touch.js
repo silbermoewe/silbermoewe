@@ -23,15 +23,19 @@ function touchHandler(el) {
     function moveHandler(event) {
         event.preventDefault();
 
-        if (!_.find(event.touches, currentTouch)) { return; }
+        var touch = findTouch(event.touches, currentTouch);
 
-        callback('move', currentX - currentTouch.clientX);
+        if (!touch) { return; }
+
+        callback('move', currentX - touch.clientX);
     }
 
     function endHandler(event) {
-        if (!_.find(event.changedTouches, currentTouch)) { return; }
+        var touch = findTouch(event.changedTouches, currentTouch);
 
-        callback('end', currentX - currentTouch.clientX);
+        if (!touch) { return; }
+
+        callback('end', currentX - touch.clientX);
         currentTouch = null;
     }
 
@@ -48,4 +52,8 @@ function touchHandler(el) {
     return {
         on: registerHandler
     };
+}
+
+function findTouch(touches, touch) {
+    return _.findWhere(touches, { identifier: touch.identifier });
 }
