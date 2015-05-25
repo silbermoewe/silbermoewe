@@ -183,7 +183,7 @@ nav {
 	ul {
 		list-style: none;
 		margin: 0 0 1.5em;
-		padding: 0;
+		padding: 0 0 0 20px;
 	}
 
 	svg {
@@ -191,6 +191,17 @@ nav {
 		width: 100px;
 		margin-right: -36px;
 		fill: currentColor;
+	}
+
+	.is-short-menu & {
+		li {
+			display: inline;
+
+			&:after {
+				content: ",";
+				opacity: .6;
+			}
+		}
 	}
 }
 
