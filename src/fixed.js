@@ -8,6 +8,7 @@ var lastScrollTop = 0,
 	scrolling,
 	debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
 
+onTick();
 win.onResize(moveNav);
 
 function onScroll() {
