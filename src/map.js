@@ -9,18 +9,14 @@ var map = {
 	world: require('./map.json'),
 	svg: d3.select('#map'),
 	$stops: document.getElementsByClassName('stop'),
-	stops: {},
-	width: subMap.offsetWidth,
-	height: subMap.offsetHeight,
-	factor: 2.8
+	stops: {}
 };
 
 _.assign(map, getSize());
 
 map.projection = d3.geo.mercator()
-					.center([19.54, 45.25]) // I used coordinates 9.21 23.64 29.87 64.36 for the bounding box
-					.translate([map.width / 2, map.height / 2])
-					.scale(map.width * map.factor); // no fucking idea how scaling works. trial & error.;
+					.translate([0, 0])
+					.scale(1);
 
 map.path = d3.geo.path().projection(map.projection);
 
@@ -37,10 +33,16 @@ map.svg.append('path')
 d3.json('https://diesilbermoewe.de:61435/route', function (error, path) {
 	if (error) { return; }
 
+	var feature = topojson.feature(path, path.objects.route);
+
+	map.bounds = map.path.bounds(feature);
+
 	map.svg.append('path')
-		.datum(topojson.feature(path, path.objects.route))
+		.datum(feature)
 		.attr('d', map.path)
 		.attr('class', 'route');
+
+	refreshMap();
 });
 
 window.addEventListener('resize', _.debounce(resize, 500));
@@ -57,15 +59,7 @@ function setStop(el) {
 function resize() {
 	_.assign(map, getSize());
 
-	map.projection
-		.translate([map.width / 2, map.height / 2])
-		.scale(map.width * map.factor);
-
-	map.svg.select('.country').attr('d', map.path);
-	map.svg.select('.border').attr('d', map.path);
-	map.svg.select('.route').attr('d', map.path);
-
-	_.each(map.$stops, setStop);
+	refreshMap();
 }
 
 function getSize() {
@@ -75,6 +69,24 @@ function getSize() {
 		width: rect.width,
 		height: rect.height
 	};
+}
+
+function refreshMap() {
+	if (!map.bounds) { return; }
+
+	var b = map.bounds,
+		s = 0.9 / Math.max((b[1][0] - b[0][0]) / map.width, (b[1][1] - b[0][1]) / map.height),
+		t = [(map.width - s * (b[1][0] + b[0][0])) / 2, (map.height - s * (b[1][1] + b[0][1])) / 2];
+
+	map.projection
+    	.scale(s)
+    	.translate(t);
+
+	map.svg.select('.country').attr('d', map.path);
+	map.svg.select('.border').attr('d', map.path);
+	map.svg.select('.route').attr('d', map.path);
+
+	_.each(map.$stops, setStop);
 }
 
 _.each(articles, function (article) {
