@@ -6,7 +6,7 @@ var d3 = require('d3'),
 var subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
 var map = {
-	world: require('./map.json'),
+	world: require('./map.json'), // bounding box: -1.12 23.64 40.2 64.36
 	svg: d3.select('#map'),
 	$stops: document.getElementsByClassName('stop'),
 	stops: {}
@@ -15,8 +15,8 @@ var map = {
 _.assign(map, getSize());
 
 map.projection = d3.geo.mercator()
-					.translate([0, 0])
-					.scale(1);
+	.translate([0, 0])
+	.scale(1);
 
 map.path = d3.geo.path().projection(map.projection);
 
