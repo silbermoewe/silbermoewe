@@ -197,7 +197,7 @@ nav {
 		li {
 			display: inline;
 
-			&:after {
+			&:not(:last-child):after {
 				content: ",";
 				opacity: .6;
 			}
@@ -293,7 +293,7 @@ nav {
 	white-space: nowrap;
 	background-color: rgba(0,0,0,.5);
 
-	div {
+	.image {
 		display: inline-block;
 		height: 100vh;
 		width: 100vw;
