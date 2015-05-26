@@ -1,21 +1,19 @@
-var MENU_TOP_PADDING = 120;
-
 var _ = require('lodash');
 var win = require('./window-dimensions');
 var articles = require('./elements').articles;
 
 var menuHeight = articles[0]
     .fixed
-    .getElementsByTagName('nav')[0]
-    .getElementsByTagName('ul')[0]
-    .offsetHeight;
+    .getElementsByClassName('language-switch')[0]
+    .getBoundingClientRect()
+    .bottom;
 var menuShortened = false;
 
 init();
 win.onResize(init);
 
 function init() {
-    var shouldShorten = (menuHeight + MENU_TOP_PADDING) > win.height;
+    var shouldShorten = menuHeight > win.height;
 
     if (shouldShorten === menuShortened) { return; }
 
