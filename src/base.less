@@ -292,6 +292,7 @@ nav {
 	font-size: 0;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,.5);
+	pointer-events: none;
 
 	.image {
 		display: inline-block;
@@ -305,6 +306,7 @@ nav {
 	}
 
 	&.is-active {
+		pointer-events: initial;
 		opacity: 1;
 		visibility: visible;
 	}
