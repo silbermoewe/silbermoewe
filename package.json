@@ -8,7 +8,8 @@
     "serve": "http-server dist -p 3000 -s",
     "build": "gulp build",
     "dist": "gulp dist",
-    "deploy": "gulp dist && gulp deploy"
+    "deploy": "gulp dist && gulp deploy",
+    "deploy-beta": "npm run deploy -- --subdomain beta"
   },
   "repository": {
     "type": "git",
