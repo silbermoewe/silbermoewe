@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+
+var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
+var Promise = require('bluebird');
+var handlebars = require('handlebars').compile;
+
+Promise.promisifyAll(fs);
+
+var postsPath = path.resolve(__dirname, '..', 'posts');
+
+Promise.join(getPostsInfo(), getTemplate(), writePosts)
+    .then(logStatistic);
+
+function getUnwrittenPosts() {
+    return fs.readdirAsync(postsPath)
+    .then(function (result) {
+        return result
+        .filter(function (file) {
+            return !path.extname(file);
+        })
+        .filter(function (file) {
+            return result.indexOf(file + '.md') === -1;
+        });
+    });
+}
+
+function getImagesForPost(name) {
+    var imagePath = path.resolve(postsPath, name);
+
+    return fs.readdirAsync(imagePath)
+    .then(function (files) {
+        return files
+        .filter(function (file) {
+            return path.extname(file) === '.jpg';
+        })
+        .map(function (image) {
+            return path.basename(image, '.jpg');
+        });
+    });
+}
+
+function getPostInfo(name) {
+    return Promise.join(name, getImagesForPost(name), function (name, images) {
+        return {
+            name: name,
+            images: images,
+            title: _.capitalize(name)
+        }
+    });
+}
+
+function getPostsInfo() {
+    return getUnwrittenPosts().map(getPostInfo);
+}
+
+function getTemplate() {
+    return fs.readFileAsync(path.resolve(__dirname, 'generator.handlebars'))
+    .then(function (file) {
+        return handlebars(file.toString());
+    });
+}
+
+function writePosts(posts, template) {
+    return Promise.all(posts.map(_.curry(writePost)(template)));
+}
+
+function writePost(template, post) {
+    var postPath = path.resolve(postsPath, post.name + '.md');
+
+    return fs.writeFileAsync(postPath, template(post))
+    .then(function () {
+        return post;
+    });
+}
+
+function logStatistic(posts) {
+    if (!posts.length) {
+        console.log('nothing to write');
+        return;
+    }
+
+    var names = _.pluck(posts, 'name');
+    console.log('wrote md files for', names.join(', '));
+}
