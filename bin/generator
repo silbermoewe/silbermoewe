@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var Promise = require('bluebird');
 var handlebars = require('handlebars').compile;
+var exifParser = require('exif-parser');
 
 Promise.promisifyAll(fs);
 
@@ -18,10 +19,9 @@ function getUnwrittenPosts() {
     .then(function (result) {
         return result
         .filter(function (file) {
-            return !path.extname(file);
-        })
-        .filter(function (file) {
-            return result.indexOf(file + '.md') === -1;
+            return !path.extname(file) &&
+                file.indexOf('.') !== 0 &&
+                result.indexOf(file + '.md') === -1;
         });
     });
 }
@@ -48,11 +48,27 @@ function getPostInfo(name) {
             images: images,
             title: _.capitalize(name)
         }
-    });
+    }).then(getDate);
 }
 
 function getPostsInfo() {
     return getUnwrittenPosts().map(getPostInfo);
+}
+
+function getDate(post) {
+    var image = post.images[0];
+    var imagePath = path.resolve(postsPath, post.name, image + '.jpg');
+
+    return fs.readFileAsync(imagePath)
+    .then(function (buffer) {
+        var exif = exifParser
+            .create(buffer)
+            .enableImageSize(false)
+            .parse();
+
+        post.date = exif.tags.CreateDate * 1000;
+        return post;
+    });
 }
 
 function getTemplate() {
