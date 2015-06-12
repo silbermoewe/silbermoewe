@@ -30,7 +30,7 @@ map.svg.append('path')
 		.attr('d', map.path)
 		.attr('class', 'border');
 
-d3.json('https://diesilbermoewe.de:61435/route', function (error, path) {
+d3.json('http://diesilbermoewe.de:61435/route', function (error, path) {
 	if (error) { return; }
 
 	var feature = topojson.feature(path, path.objects.route);
@@ -93,7 +93,7 @@ _.each(articles, function (article) {
 	var time = article.el.getAttribute('data-time'),
 		id = article.el.getAttribute('id');
 
-	d3.json('https://diesilbermoewe.de:61435/location/' + time, function (error, location) {
+	d3.json('http://diesilbermoewe.de:61435/location/' + time, function (error, location) {
 		if (error) { return; }
 
 		map.stops[id] = location;
