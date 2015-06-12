@@ -2,6 +2,7 @@ var _ = require('lodash');
 
 var articles = _.map(document.getElementsByTagName('article'), buildArticlesObject);
 var images = _.map(document.getElementsByClassName('image'), buildImageObject);
+var backgrounds = _.map(articles, buildBackgroundObject);
 
 window.addEventListener('load', updateOffsets);
 window.addEventListener('resize', _.debounce(updateOffsets, 20));
@@ -10,6 +11,7 @@ document.addEventListener('typekitLoaded', updateOffsets);
 module.exports = {
     articles: articles,
     images: images,
+    backgrounds: backgrounds,
     reCalc: updateOffsets
 };
 
@@ -27,9 +29,18 @@ function buildImageObject($image) {
     };
 }
 
+function buildBackgroundObject(article) {
+    var $el = article.el.getElementsByClassName('fixed-inner')[0];
+    return _.assign({
+        article: article,
+        background: true
+    }, buildImageObject($el));
+}
+
 function updateOffsets() {
     updateArticlesOffsets();
     updateImagesOffsets();
+    updateBackgroundOffsets();
 }
 
 function updateArticlesOffsets() {
@@ -43,5 +54,11 @@ function updateImagesOffsets() {
         image.hidden = !image.el.offsetParent;
         image.offset = image.el.offsetParent &&
             image.el.offsetParent.offsetTop + image.el.offsetTop;
+    });
+}
+
+function updateBackgroundOffsets() {
+    _.each(backgrounds, function (background) {
+        background.offset = background.article.offset;
     });
 }

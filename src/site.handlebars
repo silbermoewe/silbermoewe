@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 	<title>die silbermoewe</title>
-    <meta charset='utf-8'>
+	<meta charset='utf-8'>
 	<link rel="stylesheet" href="style.css">
     <meta property="og:site_name" content="Die Silbermoewe" />
 	<meta property="og:url" content="http://diesilbermoewe.de/"/>
@@ -31,8 +31,12 @@
     <article data-time="{{date}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
     	<div class="fixed">
     		<div class="fixed-inner"
-    		style="background-image: url(/img/{{backgroundImage}});
-    		{{#each backgroundCss}}{{@key}}: {{this}};{{/each}}">
+				style="
+				{{#if @first}}
+    				background-image: url(/img/{{backgroundImage}});
+				{{/if}}
+    			{{#each backgroundCss}}{{@key}}: {{this}};{{/each}}"
+				data-src="/img/{{backgroundImage}}">
     			<nav>
 					<h1>
 						<svg width="60px" height="40px" viewBox="0 0 48.55 40">

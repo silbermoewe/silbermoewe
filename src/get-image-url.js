@@ -11,6 +11,7 @@ function getCurrentSize(full) {
     }) || _.last(sizes);
 }
 
-function getUrl(image, full) {
-    return image.path + '-' + getCurrentSize(full) + '.jpg';
+function getUrl(image) {
+    var suffix = image.background ? '' : ('-' + getCurrentSize(image.full) + '.jpg');
+    return image.path + suffix;
 }

@@ -1,7 +1,7 @@
 var getImageUrl = require('./get-image-url');
 
 module.exports = function (image) {
-    var url = getImageUrl(image, image.full);
+    var url = getImageUrl(image);
 
     if (url === image.url) { return; }
 
