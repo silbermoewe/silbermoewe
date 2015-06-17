@@ -21,6 +21,7 @@
   "devDependencies": {
     "bluebird": "^2.9.27",
     "cheerio": "^0.18.0",
+    "dominant-color": "0.0.1",
     "event-stream": "^3.2.2",
     "exif-parser": "git://github.com/k-lange/exif-parser",
     "gulp": "^3.8.7",

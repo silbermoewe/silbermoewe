@@ -1,37 +1,61 @@
 var es = require('event-stream'),
     $ = require('cheerio'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    Promise = require('bluebird'),
     Hypher = require('hypher'),
+    color = Promise.promisify(require('dominant-color')),
     hypherEn = new Hypher(require('hyphenation.en-us')),
     hypherDe = new Hypher(require('hyphenation.de'));
 
 module.exports = function () {
     return es.map(mdReplace);
+};
 
-    function mdReplace(file, callback) {
-        var posts = JSON.parse(file.contents.toString());
+function mdReplace(file, callback) {
+    var postsObject = JSON.parse(file.contents.toString());
+    var posts = _.map(postsObject, mapPost);
 
-        _.each(posts, function (post, name) {
-            post.folder = name;
-            post.htmlId = post.title.replace(/\s/g, '_');
-            replaceImages(post, name);
-            splitLanguages(post);
-            createPreview(post);
+    Promise.resolve(posts)
+        .map(handlePost)
+        .then(sort)
+        .then(function (posts) {
+            file.contents = new Buffer(JSON.stringify(posts));
+            callback(null, file);
         });
-
-        file.contents = new Buffer(JSON.stringify(sort(posts)));
-
-        callback(null, file);
-    }
 }
 
-function replaceImages(post, name) {
+function mapPost(post, name) {
+    post.folder = name;
+    post.htmlId = post.title.replace(/\s/g, '_');
+    return post;
+}
+
+function handlePost(post) {
+    return getDominantColor(post)
+        .then(replaceImages)
+        .then(splitLanguages)
+        .then(createPreview);
+}
+
+function getDominantColor(post) {
+    return color('./img/' + post.backgroundImage)
+        .then(function (color) {
+            post.backgroundColor = '#' + color;
+            return post;
+        })
+        .catch(function () {
+            console.log('could not get color from ' + post.backgroundImage);
+            return post;
+        });
+}
+
+function replaceImages(post) {
     var $body = $('<span>' + post.body + '</span>');
 
     $body.find('img').each(function () {
         var $image = $('<div/>')
             .addClass('image')
-            .attr('data-src', 'pictures/' + name + '/' + $(this).attr('src'));
+            .attr('data-src', 'pictures/' + post.folder + '/' + $(this).attr('src'));
 
         $(this).parent().before($image);
         $(this).remove();
@@ -45,12 +69,16 @@ function replaceImages(post, name) {
     });
 
     post.body = $body.html();
+
+    return post;
 }
 
 function splitLanguages(post) {
     var languages = post.body.split('<p>---en---</p>\n');
     post.body_de = hyphenate(languages[0], hypherDe);
     post.body_en = hyphenate(languages[1], hypherEn);
+
+    return post;
 }
 
 function hyphenate(string, hyphenator) {
@@ -62,12 +90,15 @@ function hyphenate(string, hyphenator) {
             }
         });
     });
+
     return $body.html();
 }
 
 function createPreview(post) {
     var previewContainer = $('<div>' + post.body_en + '</div>').find('p');
     post.preview = previewContainer.eq(0).text() + previewContainer.eq(1).text();
+
+    return post;
 }
 
 function sort(posts) {
