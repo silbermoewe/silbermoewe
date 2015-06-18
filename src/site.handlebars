@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title>die silbermoewe</title>
-	<meta charset='utf-8'>
-	<link rel="stylesheet" href="style.css">
+    <title>die silbermoewe</title>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href="style.css">
     <meta property="og:site_name" content="Die Silbermoewe" />
-	<meta property="og:url" content="http://diesilbermoewe.de/"/>
-	<meta property="og:type" content="blog"/>
-	<meta property="og:title" content="{{this.0.title}}"/>
-	<meta property="og:image" content="http://diesilbermoewe.de/pictures/{{this.0.folder}}/{{this.0.fbImage}}-2000.jpg"/>
-	<meta property="og:image:type" content="image/jpeg" />
-	<meta property="og:image:width" content="2000" />
-	<meta property="og:image:height" content="1333" />
-	<meta property="og:description" content="{{this.0.preview}}"/>
-	<link rel="icon" href="img/favicon.png" type="image/x-icon">
+    <meta property="og:url" content="http://diesilbermoewe.de/"/>
+    <meta property="og:type" content="blog"/>
+    <meta property="og:title" content="{{this.0.title}}"/>
+    <meta property="og:image" content="http://diesilbermoewe.de/pictures/{{this.0.folder}}/{{this.0.fbImage}}-2000.jpg"/>
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1333" />
+    <meta property="og:description" content="{{this.0.preview}}"/>
+    <link rel="icon" href="img/favicon.png" type="image/x-icon">
 
-	<script type="text/javascript" src="//use.typekit.net/xjb0kam.js"></script>
-	<script type="text/javascript">
-		try {
-			Typekit.load({
-				active: function(){
-					document.dispatchEvent(new Event('typekitLoaded'));
-				}
-			});
-		} catch(e) {}
-	</script>
+    <script type="text/javascript" src="//use.typekit.net/xjb0kam.js"></script>
+    <script type="text/javascript">
+        try {
+            Typekit.load({
+                active: function(){
+                    document.dispatchEvent(new Event('typekitLoaded'));
+                }
+            });
+        } catch(e) {}
+    </script>
 </head>
 <body>
     {{#each this}}
     <article data-time="{{date}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
-    	<div class="fixed">
-    		<div class="fixed-inner"
-				style="
-				{{#if @first}}
-    				background-image: url(/img/{{backgroundImage}});
-				{{/if}}
-				background-color: {{backgroundColor}};
-    			{{#each backgroundCss}}{{@key}}: {{this}};{{/each}}"
-				data-src="/img/{{backgroundImage}}">
-    			<nav>
-					<h1>
-						<svg width="60px" height="40px" viewBox="0 0 48.55 40">
-							<use xlink:href="#logo"></use>
-						</svg>
-						die silbermöwe
-					</h1>
+        <div class="fixed">
+            <div class="fixed-inner"
+                style="
+                {{#if @first}}
+                    background-image: url(/img/{{backgroundImage}});
+                {{/if}}
+                background-color: {{backgroundColor}};
+                {{#each backgroundCss}}{{@key}}: {{this}};{{/each}}"
+                data-src="/img/{{backgroundImage}}">
+                <nav>
+                    <h1>
+                        <svg width="60px" height="40px" viewBox="0 0 48.55 40">
+                            <use xlink:href="#logo"></use>
+                        </svg>
+                        die silbermöwe
+                    </h1>
 
-					<ul>
-		                {{#each ../this}}
-						<li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
-		                {{/each}}
-					</ul>
+                    <ul>
+                        {{#each ../this}}
+                        <li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
+                        {{/each}}
+                    </ul>
 
-					<div class="language-switch">
-						[<span data-lang="de" lang="en">DE</span><span data-lang="en" lang="de">EN</span>]
-					</div>
-				</nav>
-				<div class="map">
-					<div class="meta">
-						<label lang="en">Day</label>
-						<label lang="de">Tag</label>
-						{{days}} |
-						<label lang="en">Kilometre</label>
-						<label lang="de">Kilometer</label>
-						{{km}}
-						{{#if guests}}
-							|
-							{{#each guests}}
-								{{#if @first}}
-									{{#if @last}}
-										<label lang="en">Guest</label>
-										<label lang="de">Gast</label>
-									{{else}}
-										<label lang="en">Guests</label>
-										<label lang="de">Gäste</label>
-									{{/if}}
-								{{/if}}
-								{{this}}{{#unless @last}}, {{/unless}}
-							{{/each}}
-						{{/if}}
-					</div>
-					{{#each ../this}}
-						<a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
-		            {{/each}}
-					<svg><use xlink:href="#map"></use></svg>
-    		</div>
-			</div>
-    	</div>
+                    <div class="language-switch">
+                        [<span data-lang="de" lang="en">DE</span><span data-lang="en" lang="de">EN</span>]
+                    </div>
+                </nav>
+                <div class="map">
+                    <div class="meta">
+                        <label lang="en">Day</label>
+                        <label lang="de">Tag</label>
+                        {{days}} |
+                        <label lang="en">Kilometre</label>
+                        <label lang="de">Kilometer</label>
+                        {{km}}
+                        {{#if guests}}
+                            |
+                            {{#each guests}}
+                                {{#if @first}}
+                                    {{#if @last}}
+                                        <label lang="en">Guest</label>
+                                        <label lang="de">Gast</label>
+                                    {{else}}
+                                        <label lang="en">Guests</label>
+                                        <label lang="de">Gäste</label>
+                                    {{/if}}
+                                {{/if}}
+                                {{this}}{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                        {{/if}}
+                    </div>
+                    {{#each ../this}}
+                        <a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
+                    {{/each}}
+                    <svg><use xlink:href="#map"></use></svg>
+            </div>
+            </div>
+        </div>
         <div class="content">
-	        <h2>{{title}}</h2>
-	        <span lang="en">
-	        	{{#if author}}
-	        		<p class="intro">
-	        			A guest article by {{author}}
-	        		</p>
-	        	{{/if}}
-	        	{{{body_en}}}
-	        </span>
-	        <span lang="de">
-	        	{{#if author}}
-	        		<p class="intro">
-	        			Ein Gastbeitrag von {{author}}
-	        		</p>
-	        	{{/if}}
-	        	{{{body_de}}}
-	        </span>
+            <h2>{{title}}</h2>
+            <span lang="en">
+                {{#if author}}
+                    <p class="intro">
+                        A guest article by {{author}}
+                    </p>
+                {{/if}}
+                {{{body_en}}}
+            </span>
+            <span lang="de">
+                {{#if author}}
+                    <p class="intro">
+                        Ein Gastbeitrag von {{author}}
+                    </p>
+                {{/if}}
+                {{{body_de}}}
+            </span>
         </div>
     </article>
     {{/each}}
     <svg class="svg-template">
-    	<defs>
-				<path id="logo" d="M48.543,18.961c-0.031-0.68-0.537-1.629-0.964-2.371c-0.427-0.743-1.597-1.865-2.165-2.276
-					c-0.569-0.411-1.486-0.996-2.276-1.265s-2.593-0.933-3.841-1.312c-1.249-0.379-2.546-0.821-2.546-0.821s-0.427-0.285-1.533-1.012
-					c-1.106-0.728-0.948-0.917-2.196-2.087c-1.249-1.17-1.708-2.182-2.593-2.924c-0.886-0.743-1.091-0.87-2.023-1.471
-					s-1.929-1.454-3.319-1.928c-1.391-0.475-2.719-1.06-4.663-1.312s-2.308-0.205-3.352-0.079c-1.043,0.127-2.956,0.68-4.426,1.233
-					c-1.47,0.553-3.446,1.912-4.868,3.335c-1.423,1.423-3.462,4.173-3.983,8.536c-0.521,4.362,0.569,7.872,0.759,13.088
-					c0.189,5.217,0.047,7.16-1.518,10.148C1.47,39.431,0,40,0,40h32.594c0,0-0.948-3.651-1.375-4.9s-1.012-2.655-1.691-4.109
-					c-0.68-1.455-1.359-2.529-2.165-4.411c-0.807-1.881-1.344-2.371-1.328-3.319s0.332-1.564,0.728-2.213
-					c0.395-0.648,0.742-0.98,1.518-1.438c0.774-0.458,1.201-0.695,2.039-0.996c0.837-0.3,2.371-0.979,2.703-0.995
-					c0.331-0.016,2.829,0.269,3.825,0.427c0.995,0.157,2.402,0.506,2.924,0.601s1.233,0.411,1.755,0.601s0.68,0.332,1.265,0.396
-					c0.585,0.062,0.759-0.111,1.564-0.111s0.38,0.016,1.423,0.143c1.043,0.126,1.723,0.348,1.991,0.49
-					c0.269,0.142,0.38,0.332,0.554,0.284S48.575,19.641,48.543,18.961z M20.818,10.782c-1.535,0-1.903-1.583-1.903-1.583
-					s0.386-1.108,1.861-0.995c1.476,0.112,1.944,1.523,1.944,1.523S21.933,10.782,20.818,10.782z">
-				</path>
-				<svg id="map"></svg>
-		</defs>
-	</svg>
+        <defs>
+            <path id="logo" d="M48.543,18.961c-0.031-0.68-0.537-1.629-0.964-2.371c-0.427-0.743-1.597-1.865-2.165-2.276
+                c-0.569-0.411-1.486-0.996-2.276-1.265s-2.593-0.933-3.841-1.312c-1.249-0.379-2.546-0.821-2.546-0.821s-0.427-0.285-1.533-1.012
+                c-1.106-0.728-0.948-0.917-2.196-2.087c-1.249-1.17-1.708-2.182-2.593-2.924c-0.886-0.743-1.091-0.87-2.023-1.471
+                s-1.929-1.454-3.319-1.928c-1.391-0.475-2.719-1.06-4.663-1.312s-2.308-0.205-3.352-0.079c-1.043,0.127-2.956,0.68-4.426,1.233
+                c-1.47,0.553-3.446,1.912-4.868,3.335c-1.423,1.423-3.462,4.173-3.983,8.536c-0.521,4.362,0.569,7.872,0.759,13.088
+                c0.189,5.217,0.047,7.16-1.518,10.148C1.47,39.431,0,40,0,40h32.594c0,0-0.948-3.651-1.375-4.9s-1.012-2.655-1.691-4.109
+                c-0.68-1.455-1.359-2.529-2.165-4.411c-0.807-1.881-1.344-2.371-1.328-3.319s0.332-1.564,0.728-2.213
+                c0.395-0.648,0.742-0.98,1.518-1.438c0.774-0.458,1.201-0.695,2.039-0.996c0.837-0.3,2.371-0.979,2.703-0.995
+                c0.331-0.016,2.829,0.269,3.825,0.427c0.995,0.157,2.402,0.506,2.924,0.601s1.233,0.411,1.755,0.601s0.68,0.332,1.265,0.396
+                c0.585,0.062,0.759-0.111,1.564-0.111s0.38,0.016,1.423,0.143c1.043,0.126,1.723,0.348,1.991,0.49
+                c0.269,0.142,0.38,0.332,0.554,0.284S48.575,19.641,48.543,18.961z M20.818,10.782c-1.535,0-1.903-1.583-1.903-1.583
+                s0.386-1.108,1.861-0.995c1.476,0.112,1.944,1.523,1.944,1.523S21.933,10.782,20.818,10.782z">
+            </path>
+            <svg id="map"></svg>
+        </defs>
+    </svg>
     <script src="app.js"></script>
     <!-- Piwik -->
-	<script type="text/javascript">
-	  var _paq = _paq || [];
-	  _paq.push(["setCookieDomain", "*.diesilbermoewe.de"]);
-	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
-	  (function() {
-	    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.diesilbermoewe.de/";
-	    _paq.push(['setTrackerUrl', u+'piwik.php']);
-	    _paq.push(['setSiteId', 1]);
-	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
-	    g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<noscript><p><img src="http://piwik.diesilbermoewe.de/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-	<!-- End Piwik Code -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        _paq.push(["setCookieDomain", "*.diesilbermoewe.de"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.diesilbermoewe.de/";
+            _paq.push(['setTrackerUrl', u+'piwik.php']);
+            _paq.push(['setSiteId', 1]);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+            g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <noscript><p><img src="http://piwik.diesilbermoewe.de/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
 </body>
 </html>

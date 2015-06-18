@@ -11,8 +11,8 @@ _.each(document.getElementsByClassName('language-switch'), addListeners);
 
 function setLanguage(language) {
     document.documentElement.setAttribute('lang', language);
-	window.localStorage.setItem('language', language);
-	win.reflow();
+    window.localStorage.setItem('language', language);
+    win.reflow();
 }
 
 function addListeners(element) {
