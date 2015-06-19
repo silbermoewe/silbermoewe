@@ -13,6 +13,6 @@ window.addEventListener('scroll', setPicSrc);
 setPicSrc();
 
 function setPicSrc() {
-    _.each(inViewport(images, window.pageYOffset, win.height * 2), loadImage);
     _.each(inViewport(backgrounds, window.pageYOffset, win.height * 4), loadImage);
+    _.each(inViewport(images, window.pageYOffset, win.height * 2), loadImage);
 }
