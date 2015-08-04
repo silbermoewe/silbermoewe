@@ -126,6 +126,7 @@ gulp.task('deploy', function (callback) {
         dest: 'moewe@indus.uberspace.de:/var/www/virtual/moewe/' + (argv.subdomain || '2014') + '.diesilbermoewe.de',
         recursive: true,
         syncDest: true,
+        incremental: true,
         args: ['--verbose']
     }, function(error, stdout, stderr, cmd) {
         gutil.log(stdout);
