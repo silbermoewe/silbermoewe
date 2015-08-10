@@ -1,7 +1,8 @@
 var d3 = require('d3'),
     topojson = require('topojson'),
     _ = require('lodash'),
-    articles = require('./elements').articles;
+    articles = require('./elements').articles,
+    year = require('../config.json').year;
 
 var subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
@@ -30,7 +31,7 @@ map.svg.append('path')
         .attr('d', map.path)
         .attr('class', 'border');
 
-d3.json('http://diesilbermoewe.de:61435/route', function (error, path) {
+d3.json('http://diesilbermoewe.de:61435/route/' + year, function (error, path) {
     if (error) { return; }
 
     var feature = topojson.feature(path, path.objects.route);
