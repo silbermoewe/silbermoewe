@@ -6,7 +6,7 @@ var d3 = require('d3'),
 var subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
 var map = {
-    world: require('./map.json'), // bounding box: -1.12 23.64 40.2 64.36
+    world: JSON.parse(require('raw!val!../map-provider.js')),
     svg: d3.select('#map'),
     $stops: document.getElementsByClassName('stop'),
     stops: {}
