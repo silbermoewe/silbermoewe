@@ -7,6 +7,8 @@ var es = require('event-stream'),
     hypherEn = new Hypher(require('hyphenation.en-us')),
     hypherDe = new Hypher(require('hyphenation.de'));
 
+var config = require('../config.json');
+
 module.exports = function () {
     return es.map(mdReplace);
 };
@@ -38,7 +40,7 @@ function handlePost(post) {
 }
 
 function getDominantColor(post) {
-    return color('./img/' + post.backgroundImage)
+    return color(config.posts + '/' + post.backgroundImage)
         .then(function (color) {
             post.backgroundColor = '#' + color;
             return post;
