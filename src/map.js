@@ -2,7 +2,7 @@ var d3 = require('d3'),
     topojson = require('topojson'),
     _ = require('lodash'),
     articles = require('./elements').articles,
-    year = require('../config.json').year;
+    config = require('../config.json');
 
 var subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
@@ -31,7 +31,7 @@ map.svg.append('path')
         .attr('d', map.path)
         .attr('class', 'border');
 
-d3.json('http://diesilbermoewe.de:61435/route/' + year, function (error, path) {
+d3.json(config.server + '/route/' + config.year, function (error, path) {
     if (error) { return; }
 
     var feature = topojson.feature(path, path.objects.route);
@@ -94,7 +94,7 @@ _.each(articles, function (article) {
     var time = article.el.getAttribute('data-time'),
         id = article.el.getAttribute('id');
 
-    d3.json('http://diesilbermoewe.de:61435/location/' + time, function (error, location) {
+    d3.json(config.server + '/location/' + time, function (error, location) {
         if (error) { return; }
 
         map.stops[id] = location;
