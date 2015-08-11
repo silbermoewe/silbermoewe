@@ -127,7 +127,7 @@ gulp.task('deploy', function (callback) {
     rsync({
         ssh: true,
         src: './dist/',
-        dest: 'moewe@indus.uberspace.de:/var/www/virtual/moewe/' + (argv.subdomain || '2014') + '.diesilbermoewe.de',
+        dest: 'moewe@indus.uberspace.de:/var/www/virtual/moewe/' + (argv.subdomain || config.year) + '.diesilbermoewe.de',
         recursive: true,
         syncDest: true,
         incremental: true,
