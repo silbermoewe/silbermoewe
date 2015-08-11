@@ -50,27 +50,37 @@ function getPostInfo(name) {
             images: images,
             title: _.capitalize(name)
         }
-    }).then(getDate);
+    }).then(getDateAndSort);
 }
 
 function getPostsInfo() {
     return getUnwrittenPosts().map(getPostInfo);
 }
 
-function getDate(post) {
-    var image = post.images[0];
-    var imagePath = path.resolve(postsPath, post.name, image + '.jpg');
+function getDateAndSort(post) {
+    return Promise.all(post.images).map(readDate)
+        .then(function (images) {
+            var sorted = _.sortBy(images, 'date');
+            post.date = sorted[0].date;
+            post.images = _.pluck(sorted, 'image');
+            return post;
+        });
 
-    return fs.readFileAsync(imagePath)
-    .then(function (buffer) {
-        var exif = exifParser
-            .create(buffer)
-            .enableImageSize(false)
-            .parse();
+    function readDate(image) {
+        var imagePath = path.resolve(postsPath, post.name, image + '.jpg');
+        return fs.readFileAsync(imagePath)
+        .then(function (buffer) {
+            var exif = exifParser
+                .create(buffer)
+                .enableImageSize(false)
+                .parse();
 
-        post.date = exif.tags.CreateDate * 1000;
-        return post;
-    });
+            return {
+                image: image,
+                date: exif.tags.CreateDate * 1000
+            }
+        });
+    }
 }
 
 function getTemplate() {
