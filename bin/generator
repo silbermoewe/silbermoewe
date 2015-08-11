@@ -7,9 +7,11 @@ var Promise = require('bluebird');
 var handlebars = require('handlebars').compile;
 var exifParser = require('exif-parser');
 
+var config = require('../config.json');
+
 Promise.promisifyAll(fs);
 
-var postsPath = path.resolve(__dirname, '..', 'posts');
+var postsPath = path.resolve(__dirname, '..', config.posts);
 
 Promise.join(getPostsInfo(), getTemplate(), writePosts)
     .then(logStatistic);
