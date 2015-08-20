@@ -10,6 +10,7 @@ var lastScrollTop = 0,
 
 onTick();
 win.onResize(moveNav);
+win.onResize(setFixedInnerHeight);
 
 function onScroll() {
 	debouncedCancelMoveNav();
@@ -67,6 +68,12 @@ function applyCss(article, css) {
 
 	_.each(css, function (value, property) {
 		article.fixed.style[property] = value;
+	});
+}
+
+function setFixedInnerHeight() {
+	_.each(articles, function (article) {
+		article.fixed.children[0].style.height = win.height + 'px';
 	});
 }
 
