@@ -105,9 +105,11 @@ function createPreview(post) {
 
 function sort(posts) {
     var sortedPosts = _.sortBy(posts, 'date').reverse();
+    var startKm = _.last(sortedPosts).km;
 
     sortedPosts.forEach(function (post) {
         post.days = Math.round((post.date - _.last(sortedPosts).date) / (1000 * 60 * 60 * 24));
+        post.km = post.km - startKm;
     });
 
     return sortedPosts;
