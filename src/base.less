@@ -1,5 +1,9 @@
-@navWidth: 25%;
-@mapWidth: 37.5%;
+@navWidth: 25vw;
+@mapWidth: 37.5vw;
+
+@breakPointS: 600px;
+@breakPointM: 900px;
+@breakPointL: 1024px;
 
 body {
 	margin: 0;
@@ -144,7 +148,7 @@ nav, .map, .content {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	transform: translateZ(0);
+	transform: translate3d(0, 0, 0);
 }
 
 nav, .map, .fixed-inner {
@@ -335,5 +339,89 @@ nav {
 
 	&.is-animating {
 		transition: opacity .5s, visibility .5s, transform .5s;
+	}
+}
+
+@media (max-width: @breakPointL) {
+	.image-view .image {
+		border: none;
+	}
+}
+
+@media (max-width: @breakPointM) {
+	@innerWidth: (@mapWidth * 2);
+
+	article {
+		padding-right: 0;
+	}
+
+	.map {
+		width: @innerWidth;
+	}
+
+	.fixed {
+		right: -@innerWidth;
+	}
+
+	.fixed, .content {
+		transition: transform .5s;
+	}
+
+	.is-showing-map {
+		.fixed, .content {
+			transform: translateX(-@innerWidth);
+		}
+	}
+}
+
+@media (max-width: @breakPointS) {
+	@innerWidth: (@mapWidth * 2 + @navWidth);
+
+	article {
+		padding-left: 20px;
+	}
+
+	.content {
+		padding-right: 20px;
+	}
+
+	.map {
+		width: @innerWidth;
+		padding: 71px 20px 20px;
+
+		.stop {
+			margin-top: 71px;
+			margin-left: 20px;
+		}
+
+		.meta {
+			top: 20px;
+		}
+	}
+
+	nav {
+		width: @mapWidth;
+		padding-right: 20px;
+	}
+
+	h1 {
+		padding-right: 20px;
+	}
+
+	.fixed {
+		right: -@innerWidth;
+		left: -@mapWidth;
+	}
+
+	.is-showing-map {
+		.fixed, .content {
+			transform: translateX(-@innerWidth);
+		}
+	}
+
+	.is-showing-nav {
+		.fixed, .content {
+			transform: translateX(@mapWidth);
+		}
 	}
 }
