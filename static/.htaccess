@@ -10,10 +10,10 @@ AddOutputFilterByType DEFLATE application/atom+xml \
                               application/x-font-ttf \
                               application/xhtml+xml \
                               application/xml \
-				                      application/font-woff \
+                              application/font-woff \
                               font/opentype \
-                    				  font/ttf \
-                    				  font/oft \
+                              font/ttf \
+                              font/oft \
                               image/svg+xml \
                               image/x-icon \
                               text/css \
@@ -21,7 +21,7 @@ AddOutputFilterByType DEFLATE application/atom+xml \
                               text/plain \
                               text/x-component \
                               text/xml \
-				                      text/javascript
+                              text/javascript
 
 # NEVER CACHE
 <FilesMatch "\.(html|css)$">

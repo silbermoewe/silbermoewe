@@ -30,7 +30,7 @@ var src = {
     md: config.posts + '/**/*.md',
     pict: config.posts + '/*/*.jpg',
     backgrounds: config.posts + '/*.jpg',
-    static: 'static/**/*.*'
+    static: 'static/**/*'
 }
 
 gulp.task('js', function () {
@@ -94,7 +94,7 @@ gulp.task('backgrounds', function() {
 });
 
 gulp.task('static', function() {
-  return gulp.src(src.static)
+  return gulp.src(src.static, { dot: true })
     .pipe(gulp.dest('dist'));
 });
 
