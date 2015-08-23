@@ -268,23 +268,26 @@ nav {
 }
 
 #map {
-	.border {
+	.border, .route {
 		fill: none;
-		stroke: black;
-		stroke-width: 1px;
 		stroke-linejoin: round;
+	}
+
+	.border, .country {
 		opacity: .3;
 	}
 
+	.border {
+		stroke: black;
+		stroke-width: 1px;
+	}
+
 	.route {
-		fill: none;
 		stroke: red;
 		stroke-width: 2px;
-		stroke-linejoin: round;
 	}
 
 	.country {
-		opacity: 0.3;
 		fill: currentColor;
 	}
 }
