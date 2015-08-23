@@ -8,7 +8,7 @@ var lastScrollTop = 0,
 	scrolling,
 	debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
 
-onTick();
+startAnimation();
 win.onResize(moveNav);
 win.onResize(setFixedInnerHeight);
 
@@ -17,20 +17,22 @@ function onScroll() {
 
 	if (scrolling) { return; }
 
-	onTick();
+	scrolling = true;
+	startAnimation();
+}
+
+function startAnimation() {
+	window.requestAnimationFrame(onTick);
 }
 
 function onTick() {
 	var scrollTop = window.pageYOffset;
 	scrollTop = (scrollTop < 0) ? 0 : scrollTop;
 
-	if (scrollTop === lastScrollTop) {
-		return false;
+	if (scrollTop !== lastScrollTop) {
+		lastScrollTop = scrollTop;
+		moveNav();
 	}
-
-	lastScrollTop = scrollTop;
-
-	moveNav();
 
 	if (!scrolling) { return; }
 
