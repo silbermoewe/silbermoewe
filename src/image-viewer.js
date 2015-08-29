@@ -21,15 +21,15 @@ touch.on('end', touchEndHandler);
 
 document.addEventListener('keydown', function (event) {
     switch (event.keyCode) {
-        case 27:
-            hideImageViewer();
-            break;
-        case 37:
-            goToImage(-1);
-            break;
-        case 39:
-            goToImage(1);
-            break;
+    case 27:
+        hideImageViewer();
+        break;
+    case 37:
+        goToImage(-1);
+        break;
+    case 39:
+        goToImage(1);
+        break;
     }
 });
 
