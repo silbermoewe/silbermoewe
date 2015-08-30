@@ -69,7 +69,7 @@ function convertToVw(distance) {
 function setViewerCss(offset) {
     var vw = _.findIndex(gallery, current) * -100 - (offset ? offset : 0);
 
-    if (vw > 0 || vw < ((gallery.length - 1) * -100)) { return; }
+    if (vw > 0 || vw < (gallery.length - 1) * -100) { return; }
 
     $viewer.style[transform] = 'translateX(' + vw + 'vw)';
 }

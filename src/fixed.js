@@ -27,7 +27,7 @@ function startAnimation() {
 
 function onTick() {
     var scrollTop = window.pageYOffset;
-    scrollTop = (scrollTop < 0) ? 0 : scrollTop;
+    scrollTop = scrollTop < 0 ? 0 : scrollTop;
 
     if (scrollTop !== lastScrollTop) {
         lastScrollTop = scrollTop;

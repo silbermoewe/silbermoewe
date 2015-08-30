@@ -18,20 +18,20 @@ var breakPoints = [
 module.exports = getUrl;
 
 function getCurrentSize(full) {
-    var width = full ? win.width : (getContentWidth() - 40);
+    var width = full ? win.width : getContentWidth() - 40;
     return _.find(sizes, function (size) {
         return width * window.devicePixelRatio < size;
     }) || _.last(sizes);
 }
 
 function getUrl(image) {
-    var suffix = image.background ? '' : ('-' + getCurrentSize(image.full) + '.jpg');
+    var suffix = image.background ? '' : '-' + getCurrentSize(image.full) + '.jpg';
     return image.path + suffix;
 }
 
 function getContentWidth() {
-    var breakPoint =  _.find(breakPoints, function (breakPoint) {
-        return !breakPoint.size || breakPoint.size > win.width;
+    var breakPoint =  _.find(breakPoints, function (point) {
+        return !point.size || point.size > win.width;
     });
 
     return win.width * breakPoint.ratio;

@@ -13,7 +13,7 @@ module.exports = {
 
 window.addEventListener('resize', resizeHandler);
 
-function resizeHandler (event) {
+function resizeHandler(event) {
     module.exports.width = window.innerWidth;
     module.exports.height = window.innerHeight;
     elements.reCalc();

@@ -27,7 +27,7 @@ map.svg.append('path')
         .attr('class', 'country');
 
 map.svg.append('path')
-        .datum(topojson.mesh(map.world, map.world.objects.countries, function (a,b) { return a !== b; }))
+        .datum(topojson.mesh(map.world, map.world.objects.countries, function (a, b) { return a !== b; }))
         .attr('d', map.path)
         .attr('class', 'border');
 
