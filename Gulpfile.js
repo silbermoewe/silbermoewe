@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     less = require('gulp-less'),
     prefix = require('gulp-autoprefixer'),
-    jshint = require('gulp-jshint'),
+    eslint = require('gulp-eslint'),
     concat = require('gulp-concat'),
     handlebars = require('gulp-compile-handlebars'),
     markdown = require('gulp-markdown-to-json'),
@@ -52,10 +52,10 @@ gulp.task('less', function () {
         .pipe(livereload());
 });
 
-gulp.task('jshint', function () {
+gulp.task('eslint', function () {
     return gulp.src(src.js)
-        .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('jshint-stylish'));
+        .pipe(eslint())
+        .pipe(eslint.format());
 });
 
 gulp.task('md', function () {
@@ -138,7 +138,7 @@ gulp.task('deploy', function (callback) {
     });
 });
 
-gulp.task('build', ['jshint', 'js', 'less', 'tpl', 'pict', 'backgrounds', 'static']);
+gulp.task('build', ['eslint', 'js', 'less', 'tpl', 'pict', 'backgrounds', 'static']);
 
 gulp.task('dist', function () {
     global.isDist = true;
@@ -160,7 +160,7 @@ gulp.task('watch', ['build'], function () {
         gulp.start('tpl');
     });
     watch(src.js, function () {
-        gulp.start('jshint');
+        gulp.start('eslint');
     });
     watch(src.pict, function () {
         gulp.start('pict');
