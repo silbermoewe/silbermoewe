@@ -1,12 +1,12 @@
-var d3 = require('d3'),
+const d3 = require('d3'),
     topojson = require('topojson'),
     _ = require('lodash'),
     articles = require('./elements').articles,
     config = require('../config.json');
 
-var subMap = articles[0].fixed.getElementsByTagName('svg')[1];
+const subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
-var map = {
+const map = {
     world: JSON.parse(require('raw!val!../map-provider.js')),
     svg: d3.select('#map'),
     $stops: document.getElementsByClassName('stop'),
@@ -34,7 +34,7 @@ map.svg.append('path')
 d3.json(config.server + '/route/' + config.year, function (error, path) {
     if (error) { return; }
 
-    var feature = topojson.feature(path, path.objects.route);
+    const feature = topojson.feature(path, path.objects.route);
 
     map.bounds = map.path.bounds(feature);
 
@@ -49,9 +49,9 @@ d3.json(config.server + '/route/' + config.year, function (error, path) {
 window.addEventListener('resize', _.debounce(resize, 500));
 
 function setStop(el) {
-    var id = el.getAttribute('data-for');
+    const id = el.getAttribute('data-for');
     if (map.stops[id]) {
-        var pos = map.projection(map.stops[id]);
+        const pos = map.projection(map.stops[id]);
         el.style.top = pos[1] + 'px';
         el.style.left = pos[0] + 'px';
     }
@@ -64,7 +64,7 @@ function resize() {
 }
 
 function getSize() {
-    var rect = subMap.getBoundingClientRect();
+    const rect = subMap.getBoundingClientRect();
 
     return {
         width: rect.width,
@@ -75,7 +75,7 @@ function getSize() {
 function refreshMap() {
     if (!map.bounds) { return; }
 
-    var b = map.bounds,
+    const b = map.bounds,
         s = 0.9 / Math.max((b[1][0] - b[0][0]) / map.width, (b[1][1] - b[0][1]) / map.height),
         t = [(map.width - s * (b[1][0] + b[0][0])) / 2, (map.height - s * (b[1][1] + b[0][1])) / 2];
 
@@ -91,7 +91,7 @@ function refreshMap() {
 }
 
 _.each(articles, function (article) {
-    var time = article.el.getAttribute('data-time'),
+    const time = article.el.getAttribute('data-time'),
         id = article.el.getAttribute('id');
 
     d3.json(config.server + '/location/' + time, function (error, location) {

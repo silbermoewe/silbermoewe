@@ -86,6 +86,7 @@
         "no-self-compare": 2,            // http://eslint.org/docs/rules/no-self-compare
         "no-sequences": 2,               // http://eslint.org/docs/rules/no-sequences
         "no-throw-literal": 2,           // http://eslint.org/docs/rules/no-throw-literal
+        "no-var": 2,                     // http://eslint.org/docs/rules/no-var
         "no-with": 2,                    // http://eslint.org/docs/rules/no-with
         "radix": 0,                      // http://eslint.org/docs/rules/radix
         "vars-on-top": 0,                // http://eslint.org/docs/rules/vars-on-top
@@ -124,7 +125,7 @@
         "no-new-object": 2,              // http://eslint.org/docs/rules/no-new-object
         "no-spaced-func": 2,             // http://eslint.org/docs/rules/no-spaced-func
         "no-trailing-spaces": 2,         // http://eslint.org/docs/rules/no-trailing-spaces
-        "no-extra-parens": 2,               // http://eslint.org/docs/rules/no-extra-parens
+        "no-extra-parens": 2,            // http://eslint.org/docs/rules/no-extra-parens
         "no-underscore-dangle": 0,       // http://eslint.org/docs/rules/no-underscore-dangle
         "one-var": 0,                    // http://eslint.org/docs/rules/one-var
         "padded-blocks": [0, "never"],   // http://eslint.org/docs/rules/padded-blocks
@@ -141,7 +142,7 @@
         }],
         "space-infix-ops": 2,            // http://eslint.org/docs/rules/space-infix-ops
         "space-return-throw-case": 2,    // http://eslint.org/docs/rules/space-return-throw-case
-        "spaced-comment": 2,        // http://eslint.org/docs/rules/spaced-comment
+        "spaced-comment": 2,             // http://eslint.org/docs/rules/spaced-comment
         "max-len": [2, 120, 4]           // http://eslint.org/docs/rules/max-len
     }
 }

@@ -1,13 +1,14 @@
-var _ = require('lodash');
-var images = require('./elements').images;
-var loadImage = require('./load-image');
-var win = require('./window-dimensions');
-var transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform' : 'transform';
+const _ = require('lodash');
+const images = require('./elements').images;
+const loadImage = require('./load-image');
+const win = require('./window-dimensions');
+const transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform' : 'transform';
 
-var current;
-var gallery;
-var $viewer = document.createElement('div');
-var touch = require('./touch')($viewer);
+const $viewer = document.createElement('div');
+const touch = require('./touch')($viewer);
+
+let current;
+let gallery;
 
 $viewer.classList.add('image-view');
 $viewer.addEventListener('click', hideImageViewer);
@@ -51,7 +52,7 @@ function touchMoveHandler(distance) {
 function touchEndHandler(distance) {
     $viewer.classList.add('is-animating');
 
-    var vw = convertToVw(distance);
+    const vw = convertToVw(distance);
 
     if (vw > 20) {
         goToImage(1);
@@ -67,7 +68,7 @@ function convertToVw(distance) {
 }
 
 function setViewerCss(offset) {
-    var vw = _.findIndex(gallery, current) * -100 - (offset ? offset : 0);
+    const vw = _.findIndex(gallery, current) * -100 - (offset ? offset : 0);
 
     if (vw > 0 || vw < (gallery.length - 1) * -100) { return; }
 
@@ -77,7 +78,7 @@ function setViewerCss(offset) {
 function goToImage(offset) {
     if (!current) { return; }
 
-    var image = gallery[gallery.indexOf(current) + offset];
+    const image = gallery[gallery.indexOf(current) + offset];
 
     if (!image) { return; }
 
@@ -105,7 +106,7 @@ function initImageViewer(event) {
     }
 
     gallery = visibleImages().map(function (image) {
-        var newImage = _.clone(image);
+        const newImage = _.clone(image);
         newImage.trigger = image.el;
         newImage.el = document.createElement('div');
         newImage.el.classList.add('image');
@@ -136,7 +137,7 @@ function visibleImages() {
 }
 
 function loadAround(image) {
-    var index = gallery.indexOf(image);
+    const index = gallery.indexOf(image);
 
     if (index === -1) { return; }
 

@@ -1,19 +1,20 @@
-var _ = require('lodash');
-var win = require('./window-dimensions');
-var articles = require('./elements').articles;
+const _ = require('lodash');
+const win = require('./window-dimensions');
+const articles = require('./elements').articles;
 
-var menuHeight = articles[0]
+const menuHeight = articles[0]
     .fixed
     .getElementsByClassName('language-switch')[0]
     .getBoundingClientRect()
     .bottom;
-var menuShortened = false;
+
+let menuShortened = false;
 
 init();
 win.onResize(init);
 
 function init() {
-    var shouldShorten = menuHeight > win.height;
+    const shouldShorten = menuHeight > win.height;
 
     if (shouldShorten === menuShortened) { return; }
 

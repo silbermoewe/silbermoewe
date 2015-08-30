@@ -1,12 +1,12 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-var elements = require('./elements');
-var win = require('./window-dimensions');
-var inViewport = require('./in-viewport');
-var loadImage = require('./load-image');
+const elements = require('./elements');
+const win = require('./window-dimensions');
+const inViewport = require('./in-viewport');
+const loadImage = require('./load-image');
 
-var images = elements.images;
-var backgrounds = elements.backgrounds;
+const images = elements.images;
+const backgrounds = elements.backgrounds;
 
 win.onResize(setPicSrc);
 window.addEventListener('scroll', setPicSrc);

@@ -1,8 +1,8 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-var articles = _.map(document.getElementsByTagName('article'), buildArticlesObject);
-var images = _.map(document.getElementsByClassName('image'), buildImageObject);
-var backgrounds = _.map(articles, buildBackgroundObject);
+const articles = _.map(document.getElementsByTagName('article'), buildArticlesObject);
+const images = _.map(document.getElementsByClassName('image'), buildImageObject);
+const backgrounds = _.map(articles, buildBackgroundObject);
 
 window.addEventListener('load', updateOffsets);
 window.addEventListener('resize', _.debounce(updateOffsets, 20));
@@ -30,7 +30,7 @@ function buildImageObject($image) {
 }
 
 function buildBackgroundObject(article) {
-    var $el = article.el.getElementsByClassName('fixed-inner')[0];
+    const $el = article.el.getElementsByClassName('fixed-inner')[0];
     return _.assign({
         article: article,
         background: true

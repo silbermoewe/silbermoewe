@@ -1,13 +1,13 @@
-var getImageUrl = require('./get-image-url');
+const getImageUrl = require('./get-image-url');
 
 module.exports = function (image) {
-    var url = getImageUrl(image);
+    const url = getImageUrl(image);
 
     if (url === image.url) { return; }
 
     image.url = url;
 
-    var loadIndicator = document.createElement('img');
+    const loadIndicator = document.createElement('img');
     loadIndicator.addEventListener('load', setSrc);
     loadIndicator.src = url;
     image.el.classList.add('is-loading');

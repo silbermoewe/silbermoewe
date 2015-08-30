@@ -1,11 +1,12 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 module.exports = touchHandler;
 
 function touchHandler(el) {
-    var currentTouch,
-        currentX,
-        callbacks = {};
+    const callbacks = {};
+
+    let currentTouch;
+    let currentX;
 
     el.addEventListener('touchstart', startHandler);
     el.addEventListener('touchmove', moveHandler);
@@ -23,7 +24,7 @@ function touchHandler(el) {
     function moveHandler(event) {
         event.preventDefault();
 
-        var touch = findTouch(event.touches, currentTouch);
+        const touch = findTouch(event.touches, currentTouch);
 
         if (!touch) { return; }
 
@@ -31,7 +32,7 @@ function touchHandler(el) {
     }
 
     function endHandler(event) {
-        var touch = findTouch(event.changedTouches, currentTouch);
+        const touch = findTouch(event.changedTouches, currentTouch);
 
         if (!touch) { return; }
 

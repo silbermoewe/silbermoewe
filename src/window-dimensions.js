@@ -1,6 +1,6 @@
-var _ = require('lodash');
-var elements = require('./elements');
-var callbacks = [];
+const _ = require('lodash');
+const elements = require('./elements');
+const callbacks = [];
 
 module.exports = {
     width: window.innerWidth,

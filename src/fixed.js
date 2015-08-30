@@ -1,12 +1,14 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-var articles = require('./elements').articles;
-var inViewport = require('./in-viewport');
-var win = require('./window-dimensions');
+const articles = require('./elements').articles;
+const inViewport = require('./in-viewport');
+const win = require('./window-dimensions');
 
-var lastScrollTop = 0,
-    scrolling,
-    debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
+const debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
+
+let lastScrollTop = 0;
+let scrolling;
+
 
 startAnimation();
 win.onResize(moveNav);
@@ -26,7 +28,7 @@ function startAnimation() {
 }
 
 function onTick() {
-    var scrollTop = window.pageYOffset;
+    let scrollTop = window.pageYOffset;
     scrollTop = scrollTop < 0 ? 0 : scrollTop;
 
     if (scrollTop !== lastScrollTop) {
@@ -41,15 +43,15 @@ function onTick() {
 
 function moveNav() {
 
-    var visible = inViewport(articles, lastScrollTop, win.height);
+    const visible = inViewport(articles, lastScrollTop, win.height);
 
     _.each(articles, function (article) {
-        var isVisible = visible.indexOf(article) !== -1,
+        const isVisible = visible.indexOf(article) !== -1,
             offset = article.offset - lastScrollTop,
             height = win.height - offset,
             clipped = offset > 0;
 
-        var css = {
+        const css = {
             visibility: isVisible ? 'visible' : 'hidden',
             height: clipped ? height + 'px' : '',
             top: clipped ? 'auto' : ''

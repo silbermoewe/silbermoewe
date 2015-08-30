@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var win = require('./window-dimensions');
+const _ = require('lodash');
+const win = require('./window-dimensions');
 
 // init
 
