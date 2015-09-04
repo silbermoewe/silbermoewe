@@ -1,5 +1,6 @@
-const _ = require('lodash');
-const win = require('./window-dimensions');
+import { find, last } from 'lodash';
+import win from './window-dimensions';
+
 const sizes = [400, 800, 1200, 1600, 2000];
 const breakPoints = [
     {
@@ -19,9 +20,9 @@ module.exports = getUrl;
 
 function getCurrentSize(full) {
     const width = full ? win.width : getContentWidth() - 40;
-    return _.find(sizes, function (size) {
+    return find(sizes, function (size) {
         return width * window.devicePixelRatio < size;
-    }) || _.last(sizes);
+    }) || last(sizes);
 }
 
 function getUrl(image) {
@@ -30,7 +31,7 @@ function getUrl(image) {
 }
 
 function getContentWidth() {
-    const breakPoint =  _.find(breakPoints, function (point) {
+    const breakPoint =  find(breakPoints, function (point) {
         return !point.size || point.size > win.width;
     });
 

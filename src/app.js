@@ -1,6 +1,6 @@
-require('./fixed');
-require('./language');
-require('./images');
-require('./image-viewer');
-require('./map');
-require('./menu');
+import './fixed';
+import './language';
+import './images';
+import './image-viewer';
+import './map';
+import './menu';

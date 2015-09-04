@@ -1,12 +1,9 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
-const elements = require('./elements');
-const win = require('./window-dimensions');
-const inViewport = require('./in-viewport');
-const loadImage = require('./load-image');
-
-const images = elements.images;
-const backgrounds = elements.backgrounds;
+import { images, backgrounds } from './elements';
+import win from './window-dimensions';
+import inViewport from './in-viewport';
+import loadImage from './load-image';
 
 win.onResize(setPicSrc);
 window.addEventListener('scroll', setPicSrc);

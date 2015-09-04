@@ -1,6 +1,7 @@
-const _ = require('lodash');
-const win = require('./window-dimensions');
-const articles = require('./elements').articles;
+import { forEach } from 'lodash';
+
+import win from './window-dimensions';
+import { articles } from './elements';
 
 const menuHeight = articles[0]
     .fixed
@@ -18,7 +19,7 @@ function init() {
 
     if (shouldShorten === menuShortened) { return; }
 
-    _.each(articles, function (article) {
+    forEach(articles, function (article) {
         article.fixed.classList.toggle('is-short-menu', shouldShorten);
     });
 

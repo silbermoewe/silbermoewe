@@ -1,12 +1,12 @@
-const _ = require('lodash');
-const win = require('./window-dimensions');
+import { forEach } from 'lodash';
+import win from './window-dimensions';
 
 // init
 
 setLanguage(window.localStorage.getItem('language') ||
     (window.navigator.language.indexOf('de') !== -1 ? 'de' : 'en'));
 
-_.each(document.getElementsByClassName('language-switch'), addListeners);
+forEach(document.getElementsByClassName('language-switch'), addListeners);
 
 
 function setLanguage(language) {

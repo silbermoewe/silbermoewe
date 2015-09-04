@@ -1,14 +1,13 @@
-const _ = require('lodash');
+import { forEach, isEqual, debounce } from 'lodash';
 
-const articles = require('./elements').articles;
-const inViewport = require('./in-viewport');
-const win = require('./window-dimensions');
+import { articles } from './elements';
+import inViewport from './in-viewport';
+import win from './window-dimensions';
 
-const debouncedCancelMoveNav = _.debounce(cancelMoveNav, 500);
+const debouncedCancelMoveNav = debounce(cancelMoveNav, 500);
 
 let lastScrollTop = 0;
 let scrolling;
-
 
 startAnimation();
 win.onResize(moveNav);
@@ -45,7 +44,7 @@ function moveNav() {
 
     const visible = inViewport(articles, lastScrollTop, win.height);
 
-    _.each(articles, function (article) {
+    forEach(articles, function (article) {
         const isVisible = visible.indexOf(article) !== -1,
             offset = article.offset - lastScrollTop,
             height = win.height - offset,
@@ -66,17 +65,17 @@ function cancelMoveNav() {
 }
 
 function applyCss(article, css) {
-    if (_.isEqual(article.css, css)) { return; }
+    if (isEqual(article.css, css)) { return; }
 
     article.css = css;
 
-    _.each(css, function (value, property) {
+    forEach(css, function (value, property) {
         article.fixed.style[property] = value;
     });
 }
 
 function setFixedInnerHeight() {
-    _.each(articles, function (article) {
+    forEach(articles, function (article) {
         article.fixed.children[0].style.height = win.height + 'px';
     });
 }

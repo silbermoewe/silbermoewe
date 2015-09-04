@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import { findWhere } from 'lodash';
 
 module.exports = touchHandler;
 
@@ -56,5 +56,5 @@ function touchHandler(el) {
 }
 
 function findTouch(touches, touch) {
-    return _.findWhere(touches, { identifier: touch.identifier });
+    return findWhere(touches, { identifier: touch.identifier });
 }

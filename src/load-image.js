@@ -1,4 +1,4 @@
-const getImageUrl = require('./get-image-url');
+import getImageUrl from './get-image-url';
 
 module.exports = function (image) {
     const url = getImageUrl(image);

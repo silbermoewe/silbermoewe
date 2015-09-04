@@ -1,11 +1,14 @@
-const _ = require('lodash');
-const images = require('./elements').images;
-const loadImage = require('./load-image');
-const win = require('./window-dimensions');
+import _ from 'lodash';
+
+import { images } from './elements';
+import loadImage from './load-image';
+import win from './window-dimensions';
+import touchHandler from './touch';
+
 const transform = _.isUndefined(document.body.style.transform) ? 'webkitTransform' : 'transform';
 
 const $viewer = document.createElement('div');
-const touch = require('./touch')($viewer);
+const touch = touchHandler($viewer);
 
 let current;
 let gallery;

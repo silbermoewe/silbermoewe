@@ -1,13 +1,15 @@
-const d3 = require('d3'),
-    topojson = require('topojson'),
-    _ = require('lodash'),
-    articles = require('./elements').articles,
-    config = require('../config.json');
+import d3 from 'd3';
+import topojson from 'topojson';
+import _ from 'lodash';
+
+import { articles } from './elements';
+import config from '../config.json';
+import mapString from 'raw!val!../map-provider.js';
 
 const subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
 const map = {
-    world: JSON.parse(require('raw!val!../map-provider.js')),
+    world: JSON.parse(mapString),
     svg: d3.select('#map'),
     $stops: document.getElementsByClassName('stop'),
     stops: {}

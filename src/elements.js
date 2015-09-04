@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const articles = _.map(document.getElementsByTagName('article'), buildArticlesObject);
 const images = _.map(document.getElementsByClassName('image'), buildImageObject);
