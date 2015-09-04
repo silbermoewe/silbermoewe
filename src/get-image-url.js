@@ -25,7 +25,7 @@ function getCurrentSize(full) {
 }
 
 function getUrl(image) {
-    const suffix = image.background ? '' : '-' + getCurrentSize(image.full) + '.jpg';
+    const suffix = image.background ? '' : `-${getCurrentSize(image.full)}.jpg`;
     return image.path + suffix;
 }
 
