@@ -1,4 +1,4 @@
-module.exports = function (elements, scrollPos, offset) {
+export default function (elements, scrollPos, offset) {
     const inViewport = [];
 
     for (let i = elements.length - 1; i >= 0; i--) {
@@ -15,4 +15,4 @@ module.exports = function (elements, scrollPos, offset) {
     }
 
     return inViewport;
-};
+}

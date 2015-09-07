@@ -8,12 +8,7 @@ window.addEventListener('load', updateOffsets);
 window.addEventListener('resize', _.debounce(updateOffsets, 20));
 document.addEventListener('typekitLoaded', updateOffsets);
 
-module.exports = {
-    articles: articles,
-    images: images,
-    backgrounds: backgrounds,
-    reCalc: updateOffsets
-};
+export { articles, images, backgrounds, updateOffsets as reCalc };
 
 function buildArticlesObject($article) {
     return {

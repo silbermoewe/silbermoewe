@@ -3,7 +3,7 @@ import { reCalc } from './elements';
 
 const callbacks = [];
 
-module.exports = {
+const win = {
     width: window.innerWidth,
     height: window.innerHeight,
     onResize: function (callback) {
@@ -12,11 +12,13 @@ module.exports = {
     reflow: resizeHandler
 };
 
+export default win;
+
 window.addEventListener('resize', resizeHandler);
 
 function resizeHandler(event) {
-    module.exports.width = window.innerWidth;
-    module.exports.height = window.innerHeight;
+    win.width = window.innerWidth;
+    win.height = window.innerHeight;
     reCalc();
     forEach(callbacks, function (callback) {
         callback(event);

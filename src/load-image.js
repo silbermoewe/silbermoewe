@@ -1,6 +1,6 @@
 import getImageUrl from './get-image-url';
 
-module.exports = function (image) {
+export default function (image) {
     const url = getImageUrl(image);
 
     if (url === image.url) { return; }
@@ -17,4 +17,4 @@ module.exports = function (image) {
         image.el.classList.remove('is-loading');
         loadIndicator.removeEventListener('load', setSrc);
     }
-};
+}

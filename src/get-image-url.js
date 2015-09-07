@@ -16,7 +16,7 @@ const breakPoints = [
     }
 ];
 
-module.exports = getUrl;
+export default getUrl;
 
 function getCurrentSize(full) {
     const width = full ? win.width : getContentWidth() - 40;

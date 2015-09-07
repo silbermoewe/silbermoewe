@@ -1,6 +1,6 @@
 import { findWhere } from 'lodash';
 
-module.exports = touchHandler;
+export default touchHandler;
 
 function touchHandler(el) {
     const callbacks = {};
