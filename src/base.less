@@ -212,6 +212,16 @@ nav {
 
 .language-switch {
 	cursor: pointer;
+
+	[lang] {
+		&::before, &::after {
+			content: "[";
+		}
+
+		&::after {
+			content: "]";
+		}
+	}
 }
 
 .map {
