@@ -342,6 +342,59 @@ nav {
 	}
 }
 
+.mode-switch-bar {
+	background: rgba(0,0,0,.8);
+	color: rgba(255,255,255,1);
+	position: fixed;
+	bottom: 0;
+	height: 40px;
+	width: 40px;
+	display: none;
+	fill: currentColor;
+
+	svg {
+		height: 19px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+	}
+
+	&-right {
+		right: 0;
+		border-radius: 100% 0 0 0;
+
+		svg {
+			right: 10px;
+		}
+	}
+
+	&-left {
+		left: 0;
+		border-radius: 0 100% 0 0;
+
+		svg {
+			left: 10px;
+		}
+	}
+
+	@media (max-width: @breakPointL) {
+	}
+
+	@media (max-width: @breakPointM) {
+		&-right {
+			display: block;
+		}
+	}
+
+	@media (max-width: @breakPointS) {
+		&-left {
+			display: block;
+		}
+	}
+
+
+}
+
 @media (max-width: @breakPointL) {
 	.image-view .image {
 		border: none;
