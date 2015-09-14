@@ -352,6 +352,12 @@ nav {
 	display: none;
 	fill: currentColor;
 
+	&-back {
+		position: absolute;
+		bottom: 1px;
+		font-size: 22px;
+	}
+
 	svg {
 		height: 19px;
     position: absolute;
@@ -363,7 +369,25 @@ nav {
 		right: 0;
 		border-radius: 100% 0 0 0;
 
-		svg {
+		.is-showing-map & {
+			display: none;
+		}
+
+		.mode-switch-bar-back {
+			display: none;
+		}
+
+		.is-showing-nav & {
+			.mode-switch-bar-back {
+				display: block;
+			}
+
+			.mode-switch-bar-icon {
+				display: none;
+			}
+		}
+
+		.mode-switch-bar-back {
 			right: 10px;
 		}
 	}
@@ -372,7 +396,25 @@ nav {
 		left: 0;
 		border-radius: 0 100% 0 0;
 
-		svg {
+		.is-showing-nav & {
+			display: none;
+		}
+
+		.mode-switch-bar-back {
+			display: none;
+		}
+
+		.is-showing-map & {
+			.mode-switch-bar-back {
+				display: block;
+			}
+
+			.mode-switch-bar-icon {
+				display: none;
+			}
+		}
+
+		.mode-switch-bar-back {
 			left: 10px;
 		}
 	}
