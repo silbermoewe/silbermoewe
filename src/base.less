@@ -347,8 +347,8 @@ nav {
 	color: rgba(255,255,255,1);
 	position: fixed;
 	bottom: 0;
-	height: 40px;
-	width: 40px;
+	height: 45px;
+	width: 45px;
 	display: none;
 	fill: currentColor;
 
@@ -375,6 +375,19 @@ nav {
 		svg {
 			left: 10px;
 		}
+	}
+
+	&-hamburger {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+		width: 15px;
+		height: 15px;
+		background: currentColor;
+		border-top: 3px solid currentColor;
+		border-bottom: 3px solid currentColor;
+		padding: 3px 0;
+		background-clip: content-box;
 	}
 
 	@media (max-width: @breakPointL) {
