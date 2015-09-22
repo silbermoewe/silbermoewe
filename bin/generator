@@ -12,6 +12,7 @@ var config = require('../config.json');
 Promise.promisifyAll(fs);
 
 var postsPath = path.resolve(__dirname, '..', config.posts);
+var timestampImages = _.drop(process.argv, 2);
 
 Promise.join(getPostsInfo(), getTemplate(), writePosts)
     .then(logStatistic);
@@ -60,9 +61,13 @@ function getPostsInfo() {
 function getDateAndSort(post) {
     return Promise.all(post.images).map(readDate)
         .then(function (images) {
-            var sorted = _.sortBy(images, 'date');
-            post.date = sorted[0].date;
-            post.images = _.pluck(sorted, 'image');
+            var sortedImages = _.pluck(_.sortBy(images, 'date'), 'image');
+            var timestampImage = _.intersection(sortedImages, timestampImages)[0] || sortedImages[0];
+
+            console.log('Using timestamp from ' + timestampImage);
+
+            post.date = _.find(images, { image: timestampImage }).date;
+            post.images = sortedImages;
             return post;
         });
 
@@ -76,7 +81,7 @@ function getDateAndSort(post) {
                 .parse();
 
             return {
-                image: image,
+                image,
                 date: exif.tags.CreateDate * 1000
             }
         });
