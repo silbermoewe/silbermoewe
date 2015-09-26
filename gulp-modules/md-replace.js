@@ -28,7 +28,7 @@ function mdReplace(file, callback) {
 
 function mapPost(post, name) {
     post.folder = name;
-    post.htmlId = post.title.replace(/\s/g, '_');
+    post.htmlId = _.deburr(post.title.replace(/\s/g, '_'));
     return post;
 }
 
