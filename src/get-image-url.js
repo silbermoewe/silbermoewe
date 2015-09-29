@@ -26,8 +26,11 @@ function getCurrentSize(full) {
 }
 
 function getUrl(image) {
-    const suffix = image.background ? '' : `-${getCurrentSize(image.full)}.jpg`;
-    return image.path + suffix;
+    const parts = image.path.split('.');
+    const name = parts[0];
+    const size = image.background ? '' : `-${getCurrentSize(image.full)}`;
+    const suffix = parts[1] || 'jpg';
+    return name + size + '.' + suffix;
 }
 
 function getContentWidth() {

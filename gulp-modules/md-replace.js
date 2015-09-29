@@ -27,6 +27,7 @@ function mdReplace(file, callback) {
 }
 
 function mapPost(post, name) {
+    post.backgroundImagePath = post.backgroundImage && '/backgrounds/' + post.backgroundImage;
     post.folder = name;
     post.htmlId = _.deburr(post.title.replace(/\s/g, '_'));
     return post;

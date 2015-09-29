@@ -34,11 +34,11 @@
             <div class="fixed-inner"
                 style="
                 {{#if @first}}
-                    background-image: url(/backgrounds/{{backgroundImage}});
+                    background-image: url({{backgroundImagePath}});
                 {{/if}}
                 background-color: {{backgroundColor}};
                 {{#each backgroundCss}}{{@key}}: {{this}};{{/each}}"
-                data-src="/backgrounds/{{backgroundImage}}">
+                data-src="{{backgroundImagePath}}">
                 <nav>
                     <h1>
                         <svg width="60px" height="40px" viewBox="0 0 48.55 40">

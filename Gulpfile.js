@@ -28,7 +28,7 @@ var src = {
     less: 'src/**/*.less',
     js: 'src/**/*.js',
     md: config.posts + '/**/*.md',
-    pict: config.posts + '/*/*.jpg',
+    pict: config.posts + '/*/*.{jpg,gif}',
     backgrounds: config.posts + '/*.jpg',
     static: 'static/**/*'
 }

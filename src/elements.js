@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const articles = _.map(document.getElementsByTagName('article'), buildArticlesObject);
 const images = _.map(document.getElementsByClassName('image'), buildImageObject);
-const backgrounds = _.map(articles, buildBackgroundObject);
+const backgrounds = _.compact(_.map(articles, buildBackgroundObject));
 
 window.addEventListener('load', updateOffsets);
 window.addEventListener('resize', _.debounce(updateOffsets, 20));
@@ -26,10 +26,11 @@ function buildImageObject($image) {
 
 function buildBackgroundObject(article) {
     const $el = article.el.getElementsByClassName('fixed-inner')[0];
-    return _.assign({
+    const imageObject = _.assign({
         article: article,
         background: true
     }, buildImageObject($el));
+    return imageObject.path && imageObject;
 }
 
 function updateOffsets() {
