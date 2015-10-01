@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    webpack = require('gulp-webpack'),
+    webpack = require('webpack-stream'),
     watch = require('gulp-watch'),
     less = require('gulp-less'),
     prefix = require('gulp-autoprefixer'),
