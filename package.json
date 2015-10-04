@@ -28,7 +28,7 @@
     "event-stream": "3.3.1",
     "exif-parser": "git://github.com/k-lange/exif-parser",
     "gulp": "3.9.0",
-    "gulp-autoprefixer": "2.3.1",
+    "gulp-autoprefixer": "3.0.2",
     "gulp-compile-handlebars": "0.5.0",
     "gulp-concat": "2.6.0",
     "gulp-eslint": "1.0.0",
