@@ -25,7 +25,7 @@
     "bluebird": "2.10.2",
     "cheerio": "0.19.0",
     "dominant-color": "0.0.1",
-    "event-stream": "3.3.1",
+    "event-stream": "3.3.2",
     "exif-parser": "git://github.com/k-lange/exif-parser",
     "gulp": "3.9.0",
     "gulp-autoprefixer": "2.3.1",
