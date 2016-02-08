@@ -27,7 +27,7 @@
     "dominant-color": "0.0.1",
     "event-stream": "3.3.1",
     "exif-parser": "git://github.com/k-lange/exif-parser",
-    "gulp": "3.9.0",
+    "gulp": "3.9.1",
     "gulp-autoprefixer": "2.3.1",
     "gulp-compile-handlebars": "0.5.0",
     "gulp-concat": "2.6.0",
