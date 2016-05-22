@@ -10,14 +10,14 @@ var gulp = require('gulp'),
     markdown = require('gulp-markdown-to-json'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
-    imageResize = require('gulp-image-resize'),
     newer = require('gulp-newer'),
     rsync = require('rsyncwrapper'),
     merge = require('merge-stream'),
     livereload = require('gulp-livereload'),
     _ = require('lodash'),
     fs = require('fs'),
-    argv = require('yargs').argv;
+    argv = require('yargs').argv,
+    sharp = require('gulp-sharp');
 
 var mdReplace = require('./gulp-modules/md-replace'),
     config = require('./config.json');
@@ -105,10 +105,11 @@ var resizePictures = function (width) {
             path.basename += '-' + width;
         }))
         .pipe(newer('dist/pictures/'))
-        .pipe(imageResize({
-            width: width,
-            quality: 0.6,
-            imageMagick: true
+        .pipe(sharp({
+            resize : [ width ],
+            max : true,
+            quality : 60,
+            progressive : true
         }))
         .pipe(gulp.dest('dist/pictures/'))
         .pipe(livereload());
