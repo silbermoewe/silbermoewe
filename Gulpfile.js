@@ -47,7 +47,7 @@ gulp.task('less', function () {
     return gulp.src(src.less)
         .pipe(concat('style.less'))
         .pipe(less().on('error', gutil.log))
-        .pipe(prefix('last 2 versions'))
+        .pipe(prefix({ browsers: ['last 2 versions'] }))
         .pipe(gulp.dest('dist'))
         .pipe(livereload());
 });
