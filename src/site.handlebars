@@ -48,8 +48,8 @@
                     </h1>
 
                     <ul>
-                        {{#each ../this}}
-                        <li><a{{#same ../this this}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
+                        {{#each @root}}
+                        <li><a{{#same ../this @root}} class="is-current"{{/same}} href="#{{htmlId}}">{{title}}</a></li>
                         {{/each}}
                     </ul>
 
@@ -82,7 +82,7 @@
                         {{/if}}
                     </div>
                     {{#each ../this}}
-                        <a class="stop{{#same ../this this}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
+                        <a class="stop{{#same ../this @root}} is-current{{/same}}" data-for="{{htmlId}}" href="#{{htmlId}}"></a>
                     {{/each}}
                     <svg><use xlink:href="#map"></use></svg>
             </div>
