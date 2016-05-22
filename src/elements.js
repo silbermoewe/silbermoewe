@@ -40,13 +40,13 @@ function updateOffsets() {
 }
 
 function updateArticlesOffsets() {
-    _.each(articles, function (article) {
+    _.forEach(articles, function (article) {
         article.offset = article.el.offsetTop;
     });
 }
 
 function updateImagesOffsets() {
-    _.each(images, function (image) {
+    _.forEach(images, function (image) {
         image.hidden = !image.el.offsetParent;
         image.offset = image.el.offsetParent &&
             image.el.offsetParent.offsetTop + image.el.offsetTop;
@@ -54,7 +54,7 @@ function updateImagesOffsets() {
 }
 
 function updateBackgroundOffsets() {
-    _.each(backgrounds, function (background) {
+    _.forEach(backgrounds, function (background) {
         background.offset = background.article.offset;
     });
 }

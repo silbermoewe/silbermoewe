@@ -89,10 +89,10 @@ function refreshMap() {
     map.svg.select('.border').attr('d', map.path);
     map.svg.select('.route').attr('d', map.path);
 
-    _.each(map.$stops, setStop);
+    _.forEach(map.$stops, setStop);
 }
 
-_.each(articles, function (article) {
+_.forEach(articles, function (article) {
     const time = article.el.getAttribute('data-time'),
         id = article.el.getAttribute('id');
 
@@ -101,6 +101,6 @@ _.each(articles, function (article) {
 
         map.stops[id] = location;
 
-        _.each(document.querySelectorAll('[data-for="' + id + '"]'), setStop);
+        _.forEach(document.querySelectorAll('[data-for="' + id + '"]'), setStop);
     });
 });

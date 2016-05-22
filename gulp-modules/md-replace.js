@@ -87,7 +87,7 @@ function splitLanguages(post) {
 function hyphenate(string, hyphenator) {
     var $body = $('<span>' + string + '</span>');
     $body.find('p').each(function () {
-        _.each(this.childNodes, function (node) {
+        _.forEach(this.childNodes, function (node) {
             if (node.nodeType === 3) {
                 node.nodeValue = hyphenator.hyphenateText(node.nodeValue);
             }

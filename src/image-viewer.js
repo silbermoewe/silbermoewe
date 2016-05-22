@@ -37,7 +37,7 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-_.each(images, addListener);
+_.forEach(images, addListener);
 
 function addListener(image) {
     image.el.addEventListener('click', function () {
