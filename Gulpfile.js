@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
-    webpack = require('webpack-stream'),
+    webpack = require('webpack'),
+    webpackStream = require('webpack-stream'),
     watch = require('gulp-watch'),
     less = require('gulp-less'),
     prefix = require('gulp-autoprefixer'),
@@ -37,7 +38,7 @@ gulp.task('js', function () {
     var config = global.isDist ? webpackDistConfig : webpackConfig;
     config.watch = global.isWatching;
 
-    return webpack(config)
+    return webpackStream(config, webpack)
         .pipe(gulp.dest('dist'))
         .pipe(livereload());
 });
