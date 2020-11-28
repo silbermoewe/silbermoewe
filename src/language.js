@@ -3,11 +3,9 @@ import win from './window-dimensions';
 
 // init
 
-setLanguage(window.localStorage.getItem('language') ||
-    (window.navigator.language.indexOf('de') !== -1 ? 'de' : 'en'));
+setLanguage(window.localStorage.getItem('language') || (window.navigator.language.indexOf('de') !== -1 ? 'de' : 'en'));
 
 forEach(document.getElementsByClassName('language-switch'), addListeners);
-
 
 function setLanguage(language) {
     document.documentElement.setAttribute('lang', language);

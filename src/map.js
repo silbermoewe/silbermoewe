@@ -12,38 +12,41 @@ const map = {
     world: JSON.parse(mapString),
     svg: d3.select('#map'),
     $stops: document.getElementsByClassName('stop'),
-    stops: {}
+    stops: {},
 };
 
 _.assign(map, getSize());
 
-map.projection = d3.geo.mercator()
-    .translate([0, 0])
-    .scale(1);
+map.projection = d3.geo.mercator().translate([0, 0]).scale(1);
 
 map.path = d3.geo.path().projection(map.projection);
 
-map.svg.append('path')
-        .datum(topojson.feature(map.world, map.world.objects.countries))
-        .attr('d', map.path)
-        .attr('class', 'country');
+map.svg
+    .append('path')
+    .datum(topojson.feature(map.world, map.world.objects.countries))
+    .attr('d', map.path)
+    .attr('class', 'country');
 
-map.svg.append('path')
-        .datum(topojson.mesh(map.world, map.world.objects.countries, function (a, b) { return a !== b; }))
-        .attr('d', map.path)
-        .attr('class', 'border');
+map.svg
+    .append('path')
+    .datum(
+        topojson.mesh(map.world, map.world.objects.countries, function (a, b) {
+            return a !== b;
+        })
+    )
+    .attr('d', map.path)
+    .attr('class', 'border');
 
 d3.json(config.server + '/route/' + config.year, function (error, path) {
-    if (error) { return; }
+    if (error) {
+        return;
+    }
 
     const feature = topojson.feature(path, path.objects.route);
 
     map.bounds = map.path.bounds(feature);
 
-    map.svg.append('path')
-        .datum(feature)
-        .attr('d', map.path)
-        .attr('class', 'route');
+    map.svg.append('path').datum(feature).attr('d', map.path).attr('class', 'route');
 
     refreshMap();
 });
@@ -70,20 +73,20 @@ function getSize() {
 
     return {
         width: rect.width,
-        height: rect.height
+        height: rect.height,
     };
 }
 
 function refreshMap() {
-    if (!map.bounds) { return; }
+    if (!map.bounds) {
+        return;
+    }
 
     const b = map.bounds,
         s = 0.9 / Math.max((b[1][0] - b[0][0]) / map.width, (b[1][1] - b[0][1]) / map.height),
         t = [(map.width - s * (b[1][0] + b[0][0])) / 2, (map.height - s * (b[1][1] + b[0][1])) / 2];
 
-    map.projection
-        .scale(s)
-        .translate(t);
+    map.projection.scale(s).translate(t);
 
     map.svg.select('.country').attr('d', map.path);
     map.svg.select('.border').attr('d', map.path);
@@ -97,7 +100,9 @@ _.forEach(articles, function (article) {
         id = article.el.getAttribute('id');
 
     d3.json(config.server + '/location/' + time, function (error, location) {
-        if (error) { return; }
+        if (error) {
+            return;
+        }
 
         map.stops[id] = location;
 

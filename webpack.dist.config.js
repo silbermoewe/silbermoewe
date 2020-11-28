@@ -7,10 +7,10 @@ var config = {
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                warnings: false
-            }
-        })
-    ]
+                warnings: false,
+            },
+        }),
+    ],
 };
 
 _.defaults(config, require('./webpack.config.js'));

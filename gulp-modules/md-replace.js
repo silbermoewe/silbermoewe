@@ -34,10 +34,7 @@ function mapPost(post, name) {
 }
 
 function handlePost(post) {
-    return getDominantColor(post)
-        .then(replaceImages)
-        .then(splitLanguages)
-        .then(createPreview);
+    return getDominantColor(post).then(replaceImages).then(splitLanguages).then(createPreview);
 }
 
 function getDominantColor(post) {

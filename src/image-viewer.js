@@ -25,15 +25,15 @@ touch.on('end', touchEndHandler);
 
 document.addEventListener('keydown', function (event) {
     switch (event.keyCode) {
-    case 27:
-        hideImageViewer();
-        break;
-    case 37:
-        goToImage(-1);
-        break;
-    case 39:
-        goToImage(1);
-        break;
+        case 27:
+            hideImageViewer();
+            break;
+        case 37:
+            goToImage(-1);
+            break;
+        case 39:
+            goToImage(1);
+            break;
     }
 });
 
@@ -67,23 +67,29 @@ function touchEndHandler(distance) {
 }
 
 function convertToVw(distance) {
-    return distance / win.width * 100;
+    return (distance / win.width) * 100;
 }
 
 function setViewerCss(offset) {
     const vw = _.findIndex(gallery, current) * -100 - (offset ? offset : 0);
 
-    if (vw > 0 || vw < (gallery.length - 1) * -100) { return; }
+    if (vw > 0 || vw < (gallery.length - 1) * -100) {
+        return;
+    }
 
     $viewer.style[transform] = 'translateX(' + vw + 'vw)';
 }
 
 function goToImage(offset) {
-    if (!current) { return; }
+    if (!current) {
+        return;
+    }
 
     const image = gallery[gallery.indexOf(current) + offset];
 
-    if (!image) { return; }
+    if (!image) {
+        return;
+    }
 
     showImage(image);
 }
@@ -102,7 +108,9 @@ function showImage(image, oldUrl) {
 }
 
 function initImageViewer(event) {
-    if (event) { return; }
+    if (event) {
+        return;
+    }
 
     while ($viewer.firstChild) {
         $viewer.removeChild($viewer.firstChild);
@@ -142,10 +150,14 @@ function visibleImages() {
 function loadAround(image) {
     const index = gallery.indexOf(image);
 
-    if (index === -1) { return; }
+    if (index === -1) {
+        return;
+    }
 
     [index - 1, index + 1].forEach(function (i) {
-        if (!gallery[i]) { return; }
+        if (!gallery[i]) {
+            return;
+        }
 
         loadImage(gallery[i]);
     });

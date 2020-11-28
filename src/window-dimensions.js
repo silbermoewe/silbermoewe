@@ -9,7 +9,7 @@ const win = {
     onResize: function (callback) {
         callbacks.push(callback);
     },
-    reflow: resizeHandler
+    reflow: resizeHandler,
 };
 
 export default win;

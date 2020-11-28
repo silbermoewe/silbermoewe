@@ -16,7 +16,9 @@ win.onResize(setFixedInnerHeight);
 function onScroll() {
     debouncedCancelMoveNav();
 
-    if (scrolling) { return; }
+    if (scrolling) {
+        return;
+    }
 
     scrolling = true;
     startAnimation();
@@ -35,13 +37,14 @@ function onTick() {
         moveNav();
     }
 
-    if (!scrolling) { return; }
+    if (!scrolling) {
+        return;
+    }
 
     window.requestAnimationFrame(onTick);
 }
 
 function moveNav() {
-
     const visible = inViewport(articles, lastScrollTop, win.height);
 
     forEach(articles, function (article) {
@@ -53,7 +56,7 @@ function moveNav() {
         const css = {
             visibility: isVisible ? 'visible' : 'hidden',
             height: clipped ? height + 'px' : '',
-            top: clipped ? 'auto' : ''
+            top: clipped ? 'auto' : '',
         };
 
         applyCss(article, css);
@@ -65,7 +68,9 @@ function cancelMoveNav() {
 }
 
 function applyCss(article, css) {
-    if (isEqual(article.css, css)) { return; }
+    if (isEqual(article.css, css)) {
+        return;
+    }
 
     article.css = css;
 

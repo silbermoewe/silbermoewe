@@ -3,7 +3,9 @@ import getImageUrl from './get-image-url';
 export default function (image) {
     const url = getImageUrl(image);
 
-    if (url === image.url) { return; }
+    if (url === image.url) {
+        return;
+    }
 
     image.url = url;
 

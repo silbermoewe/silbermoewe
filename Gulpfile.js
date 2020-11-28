@@ -31,21 +31,19 @@ var src = {
     md: config.posts + '/**/*.md',
     pict: config.posts + '/*/*.{jpg,gif}',
     backgrounds: config.posts + '/*.jpg',
-    static: 'static/**/*'
-}
+    static: 'static/**/*',
+};
 
 gulp.task('js', function () {
     var config = global.isDist ? webpackDistConfig : webpackConfig;
     config.watch = global.isWatching;
 
-    return webpackStream(config, webpack)
-        .pipe(gulp.dest('dist'))
-        .pipe(livereload());
+    return webpackStream(config, webpack).pipe(gulp.dest('dist')).pipe(livereload());
 });
 
 gulp.task('less', function () {
-
-    return gulp.src(src.less)
+    return gulp
+        .src(src.less)
         .pipe(concat('style.less'))
         .pipe(less().on('error', gutil.log))
         .pipe(prefix({ browsers: ['last 2 versions'] }))
@@ -54,17 +52,11 @@ gulp.task('less', function () {
 });
 
 gulp.task('eslint', function () {
-    return gulp.src(src.js)
-        .pipe(eslint())
-        .pipe(eslint.format());
+    return gulp.src(src.js).pipe(eslint()).pipe(eslint.format());
 });
 
 gulp.task('md', function () {
-    return gulp.src(src.md)
-        .pipe(gutil.buffer())
-        .pipe(markdown('blog.json'))
-        .pipe(mdReplace())
-        .pipe(gulp.dest('tmp'));
+    return gulp.src(src.md).pipe(gutil.buffer()).pipe(markdown('blog.json')).pipe(mdReplace()).pipe(gulp.dest('tmp'));
 });
 
 gulp.task('tpl', ['md'], function () {
@@ -77,40 +69,43 @@ gulp.task('tpl', ['md'], function () {
                     } else {
                         return opts.inverse(this);
                     }
-                }
-            }
+                },
+            },
         };
 
-    return gulp.src('src/**/*.handlebars')
+    return gulp
+        .src('src/**/*.handlebars')
         .pipe(handlebars(posts, options))
         .pipe(rename('index.html'))
         .pipe(gulp.dest('dist'))
         .pipe(livereload());
 });
 
-gulp.task('backgrounds', function() {
-  return gulp.src(src.backgrounds)
-    .pipe(gulp.dest('dist/backgrounds'))
-    .pipe(livereload());
+gulp.task('backgrounds', function () {
+    return gulp.src(src.backgrounds).pipe(gulp.dest('dist/backgrounds')).pipe(livereload());
 });
 
-gulp.task('static', function() {
-  return gulp.src(src.static, { dot: true })
-    .pipe(gulp.dest('dist'));
+gulp.task('static', function () {
+    return gulp.src(src.static, { dot: true }).pipe(gulp.dest('dist'));
 });
 
 var resizePictures = function (width) {
-    return gulp.src(src.pict)
-        .pipe(rename(function (path) {
-            path.basename += '-' + width;
-        }))
+    return gulp
+        .src(src.pict)
+        .pipe(
+            rename(function (path) {
+                path.basename += '-' + width;
+            })
+        )
         .pipe(newer('dist/pictures/'))
-        .pipe(sharp({
-            resize : [ width ],
-            max : true,
-            quality : 60,
-            progressive : true
-        }))
+        .pipe(
+            sharp({
+                resize: [width],
+                max: true,
+                quality: 60,
+                progressive: true,
+            })
+        )
         .pipe(gulp.dest('dist/pictures/'))
         .pipe(livereload());
 };
@@ -126,18 +121,24 @@ gulp.task('pict', function () {
 });
 
 gulp.task('deploy', function (callback) {
-    rsync({
-        ssh: true,
-        src: './dist/',
-        dest: 'moewe@indus.uberspace.de:/var/www/virtual/moewe/' + (argv.subdomain || config.year) + '.diesilbermoewe.de',
-        recursive: true,
-        syncDest: true,
-        incremental: true,
-        args: ['--verbose']
-    }, function(error, stdout, stderr, cmd) {
-        gutil.log(stdout);
-        callback(error);
-    });
+    rsync(
+        {
+            ssh: true,
+            src: './dist/',
+            dest:
+                'moewe@indus.uberspace.de:/var/www/virtual/moewe/' +
+                (argv.subdomain || config.year) +
+                '.diesilbermoewe.de',
+            recursive: true,
+            syncDest: true,
+            incremental: true,
+            args: ['--verbose'],
+        },
+        function (error, stdout, stderr, cmd) {
+            gutil.log(stdout);
+            callback(error);
+        }
+    );
 });
 
 gulp.task('build', ['eslint', 'js', 'less', 'tpl', 'pict', 'backgrounds', 'static']);

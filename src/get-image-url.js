@@ -5,24 +5,26 @@ const sizes = [400, 800, 1200, 1600, 2000];
 const breakPoints = [
     {
         size: 600,
-        ratio: 1
+        ratio: 1,
     },
     {
         size: 900,
-        ratio: 0.75
+        ratio: 0.75,
     },
     {
-        ratio: 0.375
-    }
+        ratio: 0.375,
+    },
 ];
 
 export default getUrl;
 
 function getCurrentSize(full) {
     const width = full ? win.width : getContentWidth() - 40;
-    return find(sizes, function (size) {
-        return width * window.devicePixelRatio < size;
-    }) || last(sizes);
+    return (
+        find(sizes, function (size) {
+            return width * window.devicePixelRatio < size;
+        }) || last(sizes)
+    );
 }
 
 function getUrl(image) {
@@ -34,7 +36,7 @@ function getUrl(image) {
 }
 
 function getContentWidth() {
-    const breakPoint =  find(breakPoints, function (point) {
+    const breakPoint = find(breakPoints, function (point) {
         return !point.size || point.size > win.width;
     });
 

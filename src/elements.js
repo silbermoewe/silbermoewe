@@ -13,23 +13,26 @@ export { articles, images, backgrounds, updateOffsets as reCalc };
 function buildArticlesObject($article) {
     return {
         el: $article,
-        fixed: $article.getElementsByClassName('fixed')[0]
+        fixed: $article.getElementsByClassName('fixed')[0],
     };
 }
 
 function buildImageObject($image) {
     return {
         el: $image,
-        path: $image.getAttribute('data-src')
+        path: $image.getAttribute('data-src'),
     };
 }
 
 function buildBackgroundObject(article) {
     const $el = article.el.getElementsByClassName('fixed-inner')[0];
-    const imageObject = _.assign({
-        article: article,
-        background: true
-    }, buildImageObject($el));
+    const imageObject = _.assign(
+        {
+            article: article,
+            background: true,
+        },
+        buildImageObject($el)
+    );
     return imageObject.path && imageObject;
 }
 
@@ -48,8 +51,7 @@ function updateArticlesOffsets() {
 function updateImagesOffsets() {
     _.forEach(images, function (image) {
         image.hidden = !image.el.offsetParent;
-        image.offset = image.el.offsetParent &&
-            image.el.offsetParent.offsetTop + image.el.offsetTop;
+        image.offset = image.el.offsetParent && image.el.offsetParent.offsetTop + image.el.offsetTop;
     });
 }
 

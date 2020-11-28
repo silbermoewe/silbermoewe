@@ -15,7 +15,9 @@ function touchHandler(el) {
     el.addEventListener('touchcancel', endHandler);
 
     function startHandler(event) {
-        if (currentTouch) { return; }
+        if (currentTouch) {
+            return;
+        }
 
         currentTouch = event.changedTouches[0];
         currentX = currentTouch.clientX;
@@ -26,7 +28,9 @@ function touchHandler(el) {
 
         const touch = findTouch(event.touches, currentTouch);
 
-        if (!touch) { return; }
+        if (!touch) {
+            return;
+        }
 
         callback('move', currentX - touch.clientX);
     }
@@ -34,7 +38,9 @@ function touchHandler(el) {
     function endHandler(event) {
         const touch = findTouch(event.changedTouches, currentTouch);
 
-        if (!touch) { return; }
+        if (!touch) {
+            return;
+        }
 
         callback('end', currentX - touch.clientX);
         currentTouch = null;
@@ -51,7 +57,7 @@ function touchHandler(el) {
     }
 
     return {
-        on: registerHandler
+        on: registerHandler,
     };
 }
 
