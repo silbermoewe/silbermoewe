@@ -133,7 +133,7 @@ gulp.task('deploy', function (callback) {
             ssh: true,
             src: './dist/',
             dest:
-                'moewe@indus.uberspace.de:/var/www/virtual/moewe/' +
+                'moewe@moewe.uber.space:/var/www/virtual/moewe/' +
                 (argv.subdomain || config.year) +
                 '.diesilbermoewe.de',
             recursive: true,
