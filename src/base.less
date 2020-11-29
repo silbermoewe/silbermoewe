@@ -78,6 +78,17 @@ blockquote {
     margin: 0;
 }
 
+hr {
+    border: none;
+
+    &::after {
+        content: '...';
+        text-align: center;
+        display: block;
+        margin-bottom: 1.5em;
+    }
+}
+
 .wf-loading {
     visibility: hidden;
 }
