@@ -18,7 +18,8 @@ var gulp = require('gulp'),
     fs = require('fs'),
     argv = require('yargs').argv,
     es = require('event-stream'),
-    sharp = require('sharp');
+    sharp = require('sharp'),
+    path = require('path');
 
 var mdReplace = require('./gulp-modules/md-replace'),
     config = require('./config.json');
@@ -101,9 +102,10 @@ var resizePictures = function (width) {
         .pipe(newer('dist/pictures/'))
         .pipe(
             es.map((file, callback) => {
+                const format = path.extname(file.path).replace('.', '');
                 sharp(file.contents)
                     .resize({ width, fit: 'contain' })
-                    .toFormat('jpg', { quality: 60, progressive: true })
+                    .toFormat(format, { quality: 60, progressive: true })
                     .toBuffer()
                     .then(resized => {
                         file.contents = resized;
