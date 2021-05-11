@@ -59,7 +59,7 @@
     },
     "dependencies": {
         "d3": "3.5.17",
-        "lodash": "3.10.1",
+        "lodash": "4.17.21",
         "topojson": "1.6.26"
     }
 }
