@@ -20,7 +20,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "babel-core": "6.9.0",
+        "babel-core": "6.26.3",
         "babel-eslint": "6.0.4",
         "babel-loader": "6.2.4",
         "babel-preset-es2015": "6.9.0",
@@ -29,7 +29,7 @@
         "dominant-color": "0.0.1",
         "event-stream": "3.3.2",
         "exif-parser": "git://github.com/k-lange/exif-parser",
-        "gulp": "3.9.1",
+        "gulp": "4.0.2",
         "gulp-autoprefixer": "3.1.0",
         "gulp-compile-handlebars": "0.6.1",
         "gulp-concat": "2.6.0",
