@@ -3,6 +3,7 @@ const $ = require('cheerio');
 const _ = require('lodash');
 const Hypher = require('hypher');
 const { promisify } = require('util');
+const fs = require('fs/promises');
 const dominantColor = promisify(require('dominant-color'));
 const hypherEn = new Hypher(require('hyphenation.en-us'));
 const hypherDe = new Hypher(require('hyphenation.de'));
@@ -93,13 +94,26 @@ function createPreview(post) {
     return post;
 }
 
-function sort(posts) {
+async function sort(posts) {
     const sortedPosts = _.sortBy(posts, 'date').reverse();
     const startKm = _.last(sortedPosts).km;
+    const locations = JSON.parse(await fs.readFile(config.posts + '/locations.json'));
 
-    return sortedPosts.map(post => ({
-        ...post,
-        days: Math.round((post.date - _.last(sortedPosts).date) / (1000 * 60 * 60 * 24)),
-        km: post.km - startKm,
-    }));
+    return sortedPosts.map(post => {
+        let location;
+
+        while (!location && locations.length) {
+            const curLocation = locations.pop();
+            if (curLocation.t <= post.date) {
+                location = curLocation.p;
+            }
+        }
+
+        return {
+            ...post,
+            days: Math.round((post.date - _.last(sortedPosts).date) / (1000 * 60 * 60 * 24)),
+            km: post.km - startKm,
+            location,
+        };
+    });
 }

@@ -96,16 +96,8 @@ function refreshMap() {
 }
 
 _.forEach(articles, function (article) {
-    const time = article.el.getAttribute('data-time'),
-        id = article.el.getAttribute('id');
-
-    d3.json(config.server + '/location/' + time, function (error, location) {
-        if (error) {
-            return;
-        }
-
-        map.stops[id] = location;
-
-        _.forEach(document.querySelectorAll('[data-for="' + id + '"]'), setStop);
-    });
+    const location = article.el.dataset.location.split(',').map(parseFloat);
+    const id = article.el.id;
+    map.stops[id] = location;
+    _.forEach(document.querySelectorAll('[data-for="' + id + '"]'), setStop);
 });

@@ -29,7 +29,7 @@
 </head>
 <body>
     {{#each this}}
-    <article data-time="{{date}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
+    <article data-time="{{date}}" data-location="{{location}}" id="{{htmlId}}" style="{{#each css}}{{@key}}: {{this}};{{/each}}">
         <div class="fixed">
             <div class="fixed-inner"
                 style="
