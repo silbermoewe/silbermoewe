@@ -15,21 +15,22 @@ module.exports = function () {
 
 function mdReplace(file, callback) {
     const postsObject = JSON.parse(file.contents.toString());
-    const posts = _.map(postsObject, mapPost);
 
-    Promise.all(posts.map(handlePost))
+    Promise.all(_.map(postsObject, mapPost).map(handlePost))
         .then(sort)
-        .then(function (posts) {
-            file.contents = new Buffer(JSON.stringify(posts));
+        .then(posts => {
+            file.contents = Buffer.from(JSON.stringify(posts));
             callback(null, file);
         });
 }
 
 function mapPost(post, name) {
-    post.backgroundImagePath = post.backgroundImage && '/backgrounds/' + post.backgroundImage;
-    post.folder = name;
-    post.htmlId = _.deburr(post.title.replace(/\s/g, '_'));
-    return post;
+    return {
+        ...post,
+        backgroundImagePath: post.backgroundImage && '/backgrounds/' + post.backgroundImage,
+        folder: name,
+        htmlId: _.deburr(post.title.replace(/\s/g, '_')),
+    };
 }
 
 function handlePost(post) {
@@ -38,12 +39,9 @@ function handlePost(post) {
 
 function getDominantColor(post) {
     return dominantColor(config.posts + '/' + post.backgroundImage)
-        .then(function (color) {
-            post.backgroundColor = '#' + color;
-            return post;
-        })
-        .catch(function () {
-            console.log('could not get color from ' + post.backgroundImage);
+        .then(color => ({ ...post, backgroundColor: '#' + color }))
+        .catch(() => {
+            console.log(`could not get color from ${post.backgroundImage} for ${post.title}`);
             return post;
         });
 }
@@ -67,17 +65,12 @@ function replaceImages(post) {
         $(this).remove();
     });
 
-    post.body = $body.html();
-
-    return post;
+    return { ...post, body: $body.html() };
 }
 
 function splitLanguages(post) {
-    const languages = post.body.split('<p>---en---</p>\n');
-    post.body_de = hyphenate(languages[0], hypherDe);
-    post.body_en = hyphenate(languages[1], hypherEn);
-
-    return post;
+    const [deBody, enBody] = post.body.split('<p>---en---</p>\n');
+    return { ...post, body_de: hyphenate(deBody, hypherDe), body_en: hyphenate(enBody, hypherEn) };
 }
 
 function hyphenate(string, hyphenator) {
@@ -104,10 +97,9 @@ function sort(posts) {
     const sortedPosts = _.sortBy(posts, 'date').reverse();
     const startKm = _.last(sortedPosts).km;
 
-    sortedPosts.forEach(function (post) {
-        post.days = Math.round((post.date - _.last(sortedPosts).date) / (1000 * 60 * 60 * 24));
-        post.km = post.km - startKm;
-    });
-
-    return sortedPosts;
+    return sortedPosts.map(post => ({
+        ...post,
+        days: Math.round((post.date - _.last(sortedPosts).date) / (1000 * 60 * 60 * 24)),
+        km: post.km - startKm,
+    }));
 }
