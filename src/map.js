@@ -1,15 +1,15 @@
 import d3 from 'd3';
-import topojson from 'topojson';
+import * as topojson from 'topojson-client';
 import _ from 'lodash';
 
 import { articles } from './elements';
-import config from '../config.json';
 import mapString from 'raw!val!../map-provider.js';
 
+const mapData = JSON.parse(mapString);
 const subMap = articles[0].fixed.getElementsByTagName('svg')[1];
 
 const map = {
-    world: JSON.parse(mapString),
+    world: mapData.map,
     svg: d3.select('#map'),
     $stops: document.getElementsByClassName('stop'),
     stops: {},
@@ -37,11 +37,9 @@ map.svg
     .attr('d', map.path)
     .attr('class', 'border');
 
-d3.json(config.server + '/route/' + config.year, function (error, path) {
-    if (error) {
-        return;
-    }
+setRoute(mapData.route);
 
+function setRoute(path) {
     const feature = topojson.feature(path, path.objects.route);
 
     map.bounds = map.path.bounds(feature);
@@ -49,7 +47,7 @@ d3.json(config.server + '/route/' + config.year, function (error, path) {
     map.svg.append('path').datum(feature).attr('d', map.path).attr('class', 'route');
 
     refreshMap();
-});
+}
 
 window.addEventListener('resize', _.debounce(resize, 500));
 
