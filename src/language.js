@@ -1,11 +1,10 @@
-import { forEach } from 'lodash';
 import win from './window-dimensions';
 
 // init
 
 setLanguage(window.localStorage.getItem('language') || (window.navigator.language.indexOf('de') !== -1 ? 'de' : 'en'));
 
-forEach(document.getElementsByClassName('language-switch'), addListeners);
+Array.from(document.getElementsByClassName('language-switch')).forEach(addListener);
 
 function setLanguage(language) {
     document.documentElement.setAttribute('lang', language);
@@ -13,8 +12,11 @@ function setLanguage(language) {
     win.reflow();
 }
 
-function addListeners(element) {
-    element.addEventListener('click', function (event) {
-        setLanguage(event.target.getAttribute('data-lang'));
+function addListener(element) {
+    element.addEventListener('click', event => {
+        const { lang } = event.target.dataset;
+        if (lang) {
+            setLanguage(lang);
+        }
     });
 }
